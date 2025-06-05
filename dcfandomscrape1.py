@@ -40,12 +40,11 @@ with open("fandom_pages.csv","r",encoding="utf-8-sig") as urls, open("fandom_dat
                 story.append(url)
                 story.append(soup.select('main h1')[0].text.strip())
                 story.append(storynum)
-                # if aside.select_one('.pi-item').text.strip() == "Variant Cover Artists":
-                #     story.append("issuecredit")
-                #     storynum -= 1
-                # else:
-                #     story.append(aside.select_one('.pi-item').text.strip())
-                story.append(aside.select_one('.pi-item').text.strip())
+                if aside.select_one('.pi-item').text.strip() == "Variant Cover Artists":
+                    story.append("issuecredit")
+                    storynum -= 1
+                else:
+                    story.append(aside.select_one('.pi-item').text.strip())
                 roles = aside.select('.pi-data-label')
                 creators = aside.select('.pi-data-value')
                 counts = list(range(len(roles)))
