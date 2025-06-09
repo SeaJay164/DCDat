@@ -6,7 +6,7 @@ import csv
 with open("fandom_pages.csv","r",encoding="utf-8-sig") as urls, open("fandom_data.csv","w", newline="",encoding="utf-8-sig") as fdata:
     csv_output = csv.writer(fdata)
     for url in urls:
-        url = url.strip() # test what .strip() is doing here # find out why urls with %27 don't work # find out why extra rows of issue credit are being written
+        url = url.strip() # find out why urls with %27 don't work # find out why extra rows of issue credit are being written
         try:
             page = requests.get(url) # pull url html
         except:    
