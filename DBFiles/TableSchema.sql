@@ -50,7 +50,7 @@ CREATE TABLE volumes (
     vol_url TEXT
 );
 
-CREATE TABLE date_source (
+CREATE TABLE date_sources (
     date_source_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
     d_source_name TEXT
 );
@@ -64,7 +64,7 @@ CREATE TABLE issues (
     cover_month INTEGER
     cover_year INTEGER
     release_date DATE
-    FOREIGN KEY(date_source_id) REFERENCES date_source (date_source_id)
+    FOREIGN KEY(date_source_id) REFERENCES date_sources (date_source_id)
     notes TEXT
     FOREIGN KEY(pub_id) REFERENCES publishers (pub_id)
     issURL TEXT
@@ -128,8 +128,8 @@ CREATE TABLE characters (
     FOREIGN KEY(earth_id) REFERENCES earths (earth_id)
 );
 
-CREATE TABLE char_vers (
-    char_vers_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+CREATE TABLE character_versions (
+    character_version_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
     FOREIGN KEY(character_id) REFERENCES characters (character_id)
     char_name TEXT
     char_name_alt_1 TEXT
@@ -140,7 +140,12 @@ CREATE TABLE char_vers (
     FOREIGN KEY(earth_id) REFERENCES earths (earth_id)
 );
 
-CREATE TABLE char_stor (
+CREATE TABLE character_aliases (
+    char_alias_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    FOREIGN KEY(character_version_id) REFERENCES character_versions (character_version_id)
+);
+
+CREATE TABLE character_story (
     char_stor_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
     FOREIGN KEY(character_id) REFERENCES characters (character_id)
     FOREIGN KEY(story_id) REFERENCES stories (story_id)
@@ -173,16 +178,16 @@ CREATE TABLE creators (
     last_name TEXT
 );
 
-CREATE TABLE creaRoles (
+CREATE TABLE creator_roles (
     role_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
     role_title TEXT
 );
 
-CREATE TABLE stor_crea (
+CREATE TABLE story_creators (
     stor_crea_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
     FOREIGN KEY(story_id) REFERENCES stories (story_id)
     FOREIGN KEY(creator_id) REFERENCES creators (creator_id)
-    FOREIGN KEY(role_id) REFERENCES creaRoles (role_id)
+    FOREIGN KEY(role_id) REFERENCES creator_roles (role_id)
 );
 
 CREATE TABLE bg_order (
@@ -277,7 +282,7 @@ CREATE TABLE triangle (
     issue_num TEXT
 );
 
-CREATE TABLE vol_type (
-    vol_type_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    vol_type TEXT
+CREATE TABLE volume_types (
+    volume_type_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    volume_type TEXT
 );
