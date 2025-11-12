@@ -1,255 +1,283 @@
 --This file is for the creation of tables related to this DC Database
 
 CREATE TABLE publishers (
-    pubID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    publisher text
+    pub_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    publisher TEXT
 );
 
 CREATE TABLE imprints (
-    imprintID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    imprintName TEXT
+    imprint_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    imprint_name TEXT
 );
 
 CREATE TABLE groups (
-    groupID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    groupName TEXT
+    group_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    group_name TEXT
 );
+
+CREATE FUNCTION article_sort (@unsorted TEXT)
+    RETURNS TEXT AS
+    BEGIN
+        CASE
+            WHEN LEFT(@unsorted ,4) = 'The ' THEN
+                RETURN RIGHT(@unsorted,-4) || ", The"
+            WHEN LEFT(@unsorted ,3) = 'An ' THEN
+                RETURN RIGHT(@unsorted,-3) || ", An"
+            WHEN LEFT(@unsorted ,2) = 'A ' THEN
+                RETURN RIGHT(@unsorted,-2) || ", A"
+            ELSE
+                RETURN @unsorted
+        END
+    END;
 
 CREATE TABLE series (
-    seriesID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    seriesTitle TEXT
-    --titleSort TEXT GENERATED ALWAYS AS (If(Left(seriesTitle,4)="The ",Right(seriesTitle,-4) || ", The",If(Left(seriesTitle,3)="An ",Right(seriesTitle,-3) || ", An",If(Left(seriesTitle,2)="A ",Right(seriesTitle,-2) || ", A",seriesTitle)))) VIRTUAL
-    FOREIGN KEY(groupID) REFERENCES groups (groupID)
-    FOREIGN KEY(imprintID) REFERENCES imprints (imprintID)
-    );
-
-CREATE TABLE volumes (
-    volumeID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    FOREIGN KEY(seriesID) REFERENCES series (seriesID)
-    volumeNum INTEGER
-    volumeName TEXT
-    yearStart INTEGER
-    yearEnd INTEGER
-    fanVol INTEGER
-    numFrom INTEGER REFERENCES volumes (volumeID)
-    volURL TEXT
+    series_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    series_title TEXT
+    series_title_sort TEXT GENERATED ALWAYS AS article_sort(series_title) STORED
+    FOREIGN KEY(group_id) REFERENCES groups (group_id)
+    FOREIGN KEY(imprint_id) REFERENCES imprints (imprint_id)
 );
 
-CREATE TABLE dateSource (
-    dSourceID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    dSourceName text
+CREATE TABLE volumes (
+    volume_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    FOREIGN KEY(series_id) REFERENCES series (series_id)
+    volume_num INTEGER
+    volume_name TEXT
+    year_start INTEGER
+    year_end INTEGER
+    fan_vol INTEGER
+    num_from INTEGER REFERENCES volumes (volume_id)
+    vol_url TEXT
+);
+
+CREATE TABLE date_source (
+    date_source_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    d_source_name TEXT
 );
 
 CREATE TABLE issues (
-    issueID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    FOREIGN KEY(volumeID) REFERENCES volumes (volumeID)
-    issueNum integer
-    issueType text
-    issueTitle text
-    coverMonth integer
-    coverYear integer
-    releaseDate date
-    FOREIGN KEY(dateSource) REFERENCES dateSource (dSourceID)
-    notes text
-    FOREIGN KEY(pubID) REFERENCES publishers (pubID)
-    issURL text
-    FOREIGN KEY(legacyVolID) REFERENCES volumes (volumeID)
-    issNumSubNumTitle
-    tieIn text
-    dateRead date
+    issue_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    FOREIGN KEY(volume_id) REFERENCES volumes (volume_id)
+    issue_num INTEGER
+    issue_type TEXT
+    issue_title TEXT
+    cover_month INTEGER
+    cover_year INTEGER
+    release_date DATE
+    FOREIGN KEY(date_source_id) REFERENCES date_source (date_source_id)
+    notes TEXT
+    FOREIGN KEY(pub_id) REFERENCES publishers (pub_id)
+    issURL TEXT
+    FOREIGN KEY(legacy_vol_id) REFERENCES volumes (volume_id)
+    iss_num_sub_num_title TEXT
+    tie_in TEXT
+    date_read DATE
 );
 
 CREATE TABLE stories (
-    storyID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    storyNum integer
-    storyTitle text
-    FOREIGN KEY(issueID) REFERENCES issues (issueID)
-    reprintOf REFERENCES stories (storyID)
-    readDate date
+    story_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    story_num INTEGER
+    story_title TEXT
+    FOREIGN KEY(issue_id) REFERENCES issues (issue_id)
+    reprint_of REFERENCES stories (story_id)
+    read_date DATE
 );
 
-CREATE TABLE issStor (
-    issStorID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    FOREIGN KEY(issueID) REFERENCES issues (issueID)
-    FOREIGN KEY(storyID) REFERENCES stories (storyID)
+CREATE TABLE iss_stor (
+    iss_stor_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    FOREIGN KEY(issue_id) REFERENCES issues (issue_id)
+    FOREIGN KEY(story_id) REFERENCES stories (story_id)
 );
 
 CREATE TABLE arcs (
-    arcID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    arc text
-    arcEvent boolean
-    issues text
+    arc_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    arc TEXT
+    arc_event BOOLEAN
+    issues TEXT
 );
 
-CREATE TABLE tieIns (
-    tieInID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    arc text
-    orderNum integer
-    FOREIGN KEY(storyID) REFERENCES stories (storyID)
-    FOREIGN KEY(issueID) REFERENCES issues (issueID)
-    FOREIGN KEY(arcID) REFERENCES arc (arcID)
+CREATE TABLE tie_ins (
+    tie_in_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    arc TEXT
+    order_num INTEGER
+    FOREIGN KEY(story_id) REFERENCES stories (story_id)
+    FOREIGN KEY(issue_id) REFERENCES issues (issue_id)
+    FOREIGN KEY(arc_id) REFERENCES arc (arc_id)
 );
 
 CREATE TABLE eras (
-    eraID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    era text
+    era_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    era TEXT
 );
 
 CREATE TABLE earths (
-    earthID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    earth text
-    descr text
-    FOREIGN KEY(eraID) REFERENCES eras (eraID)
+    earth_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    earth TEXT
+    descr TEXT
+    FOREIGN KEY(era_id) REFERENCES eras (era_id)
 );
 
 CREATE TABLE characters (
-    characterID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    charName text
-    FOREIGN KEY(groupID) REFERENCES groups (groupID)
-    group text
-    earthOrigin integer
-    FOREIGN KEY(earthID) REFERENCES earths (earthID)
+    character_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    char_name TEXT
+    char_name_alt_1 TEXT
+    char_name_alt_2 TEXT
+    FOREIGN KEY(group_id) REFERENCES groups (group_id)
+    group TEXT
+    earthOrigin INTEGER
+    FOREIGN KEY(earth_id) REFERENCES earths (earth_id)
 );
 
-CREATE TABLE charStor (
-    charStorID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    FOREIGN KEY(characterID) REFERENCES characters (characterID)
-    FOREIGN KEY(storyID) REFERENCES stories (storyID)
+CREATE TABLE char_vers (
+    char_vers_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    FOREIGN KEY(character_id) REFERENCES characters (character_id)
+    char_name TEXT
+    char_name_alt_1 TEXT
+    char_name_alt_2 TEXT
+    FOREIGN KEY(group_id) REFERENCES groups (group_id)
+    group TEXT
+    earthOrigin INTEGER
+    FOREIGN KEY(earth_id) REFERENCES earths (earth_id)
 );
 
-CREATE TABLE codepullnum (
-    cpnID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    codetimehour integer
-    codetimemin integer
-    codetimesec real
-    codtimesecfull real
+CREATE TABLE char_stor (
+    char_stor_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    FOREIGN KEY(character_id) REFERENCES characters (character_id)
+    FOREIGN KEY(story_id) REFERENCES stories (story_id)
+);
+
+CREATE TABLE code_pull_num (
+    cpn_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    code_time_hour INTEGER
+    code_time_min INTEGER
+    code_time_sec REAL
+    code_time_sec_full REAL
 );
 
 CREATE TABLE collected (
-    collectedID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    collTitle text
-    collType text
-    readDate date
+    collected_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    coll_title TEXT
+    coll_type TEXT
+    read_date DATE
 );
 
 CREATE TABLE collections (
-    collectionsID  INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    FOREIGN KEY(collectedID) REFERENCES collected (collectedID)
-    FOREIGN KEY(issueID) REFERENCES issues (issueID)
+    collections_id  INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    FOREIGN KEY(collected_id) REFERENCES collected (collected_id)
+    FOREIGN KEY(issue_id) REFERENCES issues (issue_id)
 );
 
 CREATE TABLE creators (
-    creatorID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    firstName text
-    lastName text
+    creator_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    first_name TEXT
+    last_name TEXT
 );
 
 CREATE TABLE creaRoles (
-    roleID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    roleTitle text
+    role_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    role_title TEXT
 );
 
-CREATE TABLE storCrea (
-    storCreaID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    FOREIGN KEY(storyID) REFERENCES stories (storyID)
-    FOREIGN KEY(creatorID) REFERENCES creators (creatorID)
-    FOREIGN KEY(roleID) REFERENCES creaRoles (roleID)
+CREATE TABLE stor_crea (
+    stor_crea_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    FOREIGN KEY(story_id) REFERENCES stories (story_id)
+    FOREIGN KEY(creator_id) REFERENCES creators (creator_id)
+    FOREIGN KEY(role_id) REFERENCES creaRoles (role_id)
 );
 
-CREATE TABLE bgOrder (
-    bgOrderID  INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+CREATE TABLE bg_order (
+    bg_order_id  INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
     book TEXT
-    date1 date
-    story text
-    dateNote text
+    date1 DATE
+    story TEXT
+    date_note TEXT
 );
 
 CREATE TABLE flashpoint (
-    fpID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    book text
+    fp_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    book TEXT
 );
 
-CREATE TABLE fourthWorld (
-    fwID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    book text
-    issueNum integer
+CREATE TABLE fourth_world (
+    fw_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    book TEXT
+    issue_num INTEGER
 );
 
-CREATE TABLE glOrder2 (
-    gloID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    order integer
-    age text
-    book text
-    annual/special text
-    volumeNum integer
-    issueNum integer
+CREATE TABLE gl_order2 (
+    glo_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    order INTEGER
+    age TEXT
+    book TEXT
+    annual_special TEXT
+    volume_num INTEGER
+    issue_num INTEGER
 );
 
-CREATE TABLE MAWoCDC (
-    mawocdcID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    series text
-    volNum integer
-    issue text
-    issNum text
-    imprint text
-    variant text
-    note text
-    printing text
-    coverMonth text
-    coverYear text
-    releaseDate date
-    owned integer
+CREATE TABLE mawoc_dc (
+    mawocdc_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    series TEXT
+    vol_num INTEGER
+    issue TEXT
+    iss_num TEXT
+    imprint TEXT
+    variant TEXT
+    note TEXT
+    printing TEXT
+    cover_month TEXT
+    cover_year TEXT
+    release_date DATE
+    owned INTEGER
 );
 
-CREATE TABLE MAWoCDigital (
-    mawocdID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    series text
-    volNum integer
-    issue text
-    issNum text
-    coverMonth text
-    coverYear text
-    releaseDate date
-    owned integer
+CREATE TABLE mawoc_digital (
+    mawocd_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    series TEXT
+    vol_num INTEGER
+    issue TEXT
+    iss_num TEXT
+    cover_month TEXT
+    cover_year TEXT
+    release_date DATE
+    owned INTEGER
 );
 
-CREATE TABLE MAWoCPromo (
-    mawocpID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    series text
-    volNum integer
-    issue text
-    issNum text
-    variant text
-    note text
-    coverMonth text
-    coverYear text
-    releaseDate date
-    addNotes text
-    owned integer
+CREATE TABLE mawoc_promo (
+    mawocp_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    series TEXT
+    vol_num INTEGER
+    issue TEXT
+    iss_num TEXT
+    variant TEXT
+    note TEXT
+    cover_month TEXT
+    cover_year TEXT
+    release_date DATE
+    add_notes TEXT
+    owned INTEGER
 );
 
 CREATE TABLE notes (
-    notesID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    noteShort text
-    noteLong text
+    notes_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    note_short TEXT
+    note_long TEXT
 );
 
 CREATE TABLE sheet1 (
-    issueID integer
-    issURL text
+    issue_id INTEGER
+    iss_url TEXT
 );
 
 CREATE TABLE triangle (
-    triangleID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    triYear integer
-    triNum integer
-    FOREIGN KEY(issueID) REFERENCES issues (issueID)
-    series text
-    issueNum text
+    triangle_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    tri_year INTEGER
+    tri_num INTEGER
+    FOREIGN KEY(issue_id) REFERENCES issues (issue_id)
+    series TEXT
+    issue_num TEXT
 );
 
-CREATE TABLE volType (
-    volTypeID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
-    volType text
+CREATE TABLE vol_type (
+    vol_type_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+    vol_type TEXT
 );
-
