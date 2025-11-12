@@ -1,5 +1,7 @@
 --This file is for the creation of tables related to this DC Database
 
+CREATE DATABASE DCDat;
+
 CREATE TABLE publishers (
     pub_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
     publisher TEXT
