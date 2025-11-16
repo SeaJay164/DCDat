@@ -16,28 +16,28 @@ CREATE TABLE groups_t (
 );
 
 CREATE FUNCTION article_sort (unsorted TEXT)
-  RETURNS TEXT
-  LANGUAGE plpgsql
+    RETURNS TEXT
+    LANGUAGE plpgsql
 AS $$
 DECLARE
-  sorted TEXT;
+    sorted TEXT;
 BEGIN
-  IF LEFT(unsorted, 4) = 'The ' THEN
-    sorted := RIGHT(unsorted, LENGTH(unsorted) - 4) || ', The';
-  ELSIF LEFT(unsorted, 4) = 'the ' THEN
-    sorted := RIGHT(unsorted, LENGTH(unsorted) - 4) || ', the';
-  ELSIF LEFT(unsorted, 3) = 'An ' THEN
-    sorted := RIGHT(unsorted, LENGTH(unsorted) - 3) || ', An';
-  ELSIF LEFT(unsorted, 3) = 'an ' THEN
-    sorted := RIGHT(unsorted, LENGTH(unsorted) - 3) || ', an';
-  ELSIF LEFT(unsorted, 2) = 'A ' THEN
-    sorted := RIGHT(unsorted, LENGTH(unsorted) - 2) || ', A';
-  ELSIF LEFT(unsorted, 2) = 'a ' THEN
-    sorted := RIGHT(unsorted, LENGTH(unsorted) - 2) || ', a';
-  ELSE
-    sorted := unsorted;
-  END IF;
-  RETURN sorted;
+    IF LEFT(unsorted, 4) = 'The ' THEN
+        sorted := RIGHT(unsorted, LENGTH(unsorted) - 4) || ', The';
+    ELSIF LEFT(unsorted, 4) = 'the ' THEN
+        sorted := RIGHT(unsorted, LENGTH(unsorted) - 4) || ', the';
+    ELSIF LEFT(unsorted, 3) = 'An ' THEN
+        sorted := RIGHT(unsorted, LENGTH(unsorted) - 3) || ', An';
+    ELSIF LEFT(unsorted, 3) = 'an ' THEN
+        sorted := RIGHT(unsorted, LENGTH(unsorted) - 3) || ', an';
+    ELSIF LEFT(unsorted, 2) = 'A ' THEN
+        sorted := RIGHT(unsorted, LENGTH(unsorted) - 2) || ', A';
+    ELSIF LEFT(unsorted, 2) = 'a ' THEN
+        sorted := RIGHT(unsorted, LENGTH(unsorted) - 2) || ', a';
+    ELSE
+        sorted := unsorted;
+    END IF;
+    RETURN sorted;
 END;
 $$;
 
@@ -52,7 +52,7 @@ CREATE TABLE series (
 CREATE TABLE volumes (
     volume_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     series_id INTEGER REFERENCES series (series_id),
-    volume_num INTEGER,
+    volume_num REAL,
     volume_name TEXT,
     year_start INTEGER,
     year_end INTEGER,
@@ -78,7 +78,7 @@ CREATE TABLE issues (
     date_source_id INTEGER REFERENCES date_sources (date_source_id),
     notes TEXT,
     pub_id INTEGER REFERENCES publishers (pub_id),
-    issURL TEXT,
+    iss_url TEXT,
     legacy_vol_id INTEGER REFERENCES volumes (volume_id),
     iss_num_sub_num_title TEXT,
     tie_in TEXT,

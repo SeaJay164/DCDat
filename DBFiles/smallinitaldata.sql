@@ -12,7 +12,7 @@ VALUES
     ('Holyoke'),
     ('Charlton');
 
-INSERT INTO groups (group)
+INSERT INTO groups_t (group_name)
 VALUES
     ('Anthology'),
     ('Team'),
@@ -37,3 +37,28 @@ VALUES
     ('Other'),
     ('Event'),
     ('Crisis');
+
+    INSERT INTO date_sources (d_source_name)
+    VALUES
+        ('Cover'),
+        ('DCDb'),
+        ('DCUI'),
+        ('MAWoC'),
+        ('See Note'),
+        ('Solicit');
+
+COPY series(series_title,group_id)
+FROM 'D:\Downloads\public_series_export_2025-11-16_182835.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY volumes(series_id,volume_num,volume_name,year_start,year_end,fan_vol,vol_url)
+FROM 'D:\Downloads\public_volumes_export_2025-11-16_183014.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY issues(volume_id,issue_num,issue_type,issue_title,cover_month,cover_year,release_date,date_source_id,notes,pub_id,iss_url,legacy_vol_id,iss_num_sub_num_title,tie_in,date_read)
+FROM 'D:\Downloads\Issues.csv'
+DELIMITER ','
+CSV HEADER;
+
