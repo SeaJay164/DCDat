@@ -10,11 +10,11 @@ CREATE TABLE imprints (
     imprint_name TEXT
 );
 
-CREATE TABLE groups (
+CREATE TABLE groups_t (
     group_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     group_name TEXT
 );
-
+/*
 CREATE FUNCTION article_sort (@unsorted TEXT)
     RETURNS TEXT AS
     BEGIN
@@ -29,18 +29,18 @@ CREATE FUNCTION article_sort (@unsorted TEXT)
                 RETURN @unsorted
         END
     END;
-
+*/
 CREATE TABLE series (
     series_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     series_title TEXT,
-    series_title_sort TEXT GENERATED ALWAYS AS article_sort(series_title) STORED,
-    FOREIGN KEY(group_id) REFERENCES groups (group_id),
-    FOREIGN KEY(imprint_id) REFERENCES imprints (imprint_id)
+    --series_title_sort TEXT GENERATED ALWAYS AS article_sort(series_title) STORED,
+    group_id INTEGER REFERENCES groups_t (group_id),
+    imprint_id INTEGER REFERENCES imprints (imprint_id)
 );
 
 CREATE TABLE volumes (
     volume_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    FOREIGN KEY(series_id) REFERENCES series (series_id),
+    series_id INTEGER REFERENCES series (series_id),
     volume_num INTEGER,
     volume_name TEXT,
     year_start INTEGER,
@@ -57,18 +57,18 @@ CREATE TABLE date_sources (
 
 CREATE TABLE issues (
     issue_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    FOREIGN KEY(volume_id) REFERENCES volumes (volume_id),
+    volume_id INTEGER REFERENCES volumes (volume_id),
     issue_num INTEGER,
     issue_type TEXT,
     issue_title TEXT,
     cover_month INTEGER,
     cover_year INTEGER,
     release_date DATE,
-    FOREIGN KEY(date_source_id) REFERENCES date_sources (date_source_id),
+    date_source_id INTEGER REFERENCES date_sources (date_source_id),
     notes TEXT,
-    FOREIGN KEY(pub_id) REFERENCES publishers (pub_id),
+    pub_id INTEGER REFERENCES publishers (pub_id),
     issURL TEXT,
-    FOREIGN KEY(legacy_vol_id) REFERENCES volumes (volume_id),
+    legacy_vol_id INTEGER REFERENCES volumes (volume_id),
     iss_num_sub_num_title TEXT,
     tie_in TEXT,
     date_read DATE
@@ -78,15 +78,15 @@ CREATE TABLE stories (
     story_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     story_num INTEGER,
     story_title TEXT,
-    FOREIGN KEY(issue_id) REFERENCES issues (issue_id),
-    reprint_of REFERENCES stories (story_id),
+    issue_id INTEGER REFERENCES issues (issue_id),
+    reprint_of INTEGER REFERENCES stories (story_id),
     read_date DATE
 );
 
 CREATE TABLE iss_stor (
     iss_stor_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    FOREIGN KEY(issue_id) REFERENCES issues (issue_id),
-    FOREIGN KEY(story_id) REFERENCES stories (story_id)
+    issue_id INTEGER REFERENCES issues (issue_id),
+    story_id INTEGER REFERENCES stories (story_id)
 );
 
 CREATE TABLE arcs (
@@ -100,9 +100,9 @@ CREATE TABLE tie_ins (
     tie_in_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     arc TEXT,
     order_num INTEGER,
-    FOREIGN KEY(story_id) REFERENCES stories (story_id),
-    FOREIGN KEY(issue_id) REFERENCES issues (issue_id),
-    FOREIGN KEY(arc_id) REFERENCES arc (arc_id)
+    story_id INTEGER REFERENCES stories (story_id),
+    issue_id INTEGER REFERENCES issues (issue_id),
+    arc_id INTEGER REFERENCES arcs (arc_id)
 );
 
 CREATE TABLE eras (
@@ -114,41 +114,41 @@ CREATE TABLE earths (
     earth_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     earth TEXT,
     descr TEXT,
-    FOREIGN KEY(era_id) REFERENCES eras (era_id)
+    era_id INTEGER REFERENCES eras (era_id)
 );
 
-CREATE TABLE characters (
+CREATE TABLE characters_primary (
     character_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     char_name TEXT,
     char_name_alt_1 TEXT,
     char_name_alt_2 TEXT,
-    FOREIGN KEY(group_id) REFERENCES groups (group_id),
-    group TEXT,
+    group_id INTEGER REFERENCES groups_t (group_id),
+    group_name TEXT,
     earthOrigin INTEGER,
-    FOREIGN KEY(earth_id) REFERENCES earths (earth_id)
+    earth_id INTEGER REFERENCES earths (earth_id)
 );
 
 CREATE TABLE character_versions (
     character_version_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    FOREIGN KEY(character_id) REFERENCES characters (character_id),
+    character_id INTEGER REFERENCES characters_primary (character_id),
     char_name TEXT,
     char_name_alt_1 TEXT,
     char_name_alt_2 TEXT,
-    FOREIGN KEY(group_id) REFERENCES groups (group_id),
-    group TEXT,
+    group_id INTEGER REFERENCES groups_t (group_id),
+    group_name TEXT,
     earthOrigin INTEGER,
-    FOREIGN KEY(earth_id) REFERENCES earths (earth_id)
+    earth_id INTEGER REFERENCES earths (earth_id)
 );
 
 CREATE TABLE character_aliases (
     char_alias_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    FOREIGN KEY(character_version_id) REFERENCES character_versions (character_version_id)
+    character_version_id INTEGER REFERENCES character_versions (character_version_id)
 );
 
 CREATE TABLE character_story (
     char_stor_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    FOREIGN KEY(character_id) REFERENCES characters (character_id),
-    FOREIGN KEY(story_id) REFERENCES stories (story_id)
+    character_id INTEGER REFERENCES characters_primary (character_id),
+    story_id INTEGER REFERENCES stories (story_id)
 );
 
 CREATE TABLE code_pull_num (
@@ -168,8 +168,8 @@ CREATE TABLE collected (
 
 CREATE TABLE collections (
     collections_id  INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    FOREIGN KEY(collected_id) REFERENCES collected (collected_id),
-    FOREIGN KEY(issue_id) REFERENCES issues (issue_id)
+    collected_id INTEGER REFERENCES collected (collected_id),
+    issue_id INTEGER REFERENCES issues (issue_id)
 );
 
 CREATE TABLE creators (
@@ -185,9 +185,9 @@ CREATE TABLE creator_roles (
 
 CREATE TABLE story_creators (
     stor_crea_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    FOREIGN KEY(story_id) REFERENCES stories (story_id),
-    FOREIGN KEY(creator_id) REFERENCES creators (creator_id),
-    FOREIGN KEY(role_id) REFERENCES creator_roles (role_id)
+    story_id INTEGER REFERENCES stories (story_id),
+    creator_id INTEGER REFERENCES creators (creator_id),
+    role_id INTEGER REFERENCES creator_roles (role_id)
 );
 
 CREATE TABLE bg_order (
@@ -211,7 +211,7 @@ CREATE TABLE fourth_world (
 
 CREATE TABLE gl_order2 (
     glo_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    order INTEGER,
+    r_order INTEGER,
     age TEXT,
     book TEXT,
     annual_special TEXT,
@@ -277,7 +277,7 @@ CREATE TABLE triangle (
     triangle_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     tri_year INTEGER,
     tri_num INTEGER,
-    FOREIGN KEY(issue_id) REFERENCES issues (issue_id),
+    issue_id INTEGER REFERENCES issues (issue_id),
     series TEXT,
     issue_num TEXT
 );
