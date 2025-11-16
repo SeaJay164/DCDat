@@ -14,22 +14,33 @@ CREATE TABLE groups_t (
     group_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     group_name TEXT
 );
-/*
-CREATE FUNCTION article_sort (@unsorted TEXT)
-    RETURNS TEXT AS
-    BEGIN
-        CASE
-            WHEN LEFT(@unsorted ,4) = 'The ' THEN
-                RETURN RIGHT(@unsorted,-4) || ", The"
-            WHEN LEFT(@unsorted ,3) = 'An ' THEN
-                RETURN RIGHT(@unsorted,-3) || ", An"
-            WHEN LEFT(@unsorted ,2) = 'A ' THEN
-                RETURN RIGHT(@unsorted,-2) || ", A"
-            ELSE
-                RETURN @unsorted
-        END
-    END;
-*/
+
+CREATE FUNCTION article_sort (unsorted TEXT)
+  RETURNS TEXT
+  LANGUAGE plpgsql
+AS $$
+DECLARE
+  sorted TEXT;
+BEGIN
+  IF LEFT(unsorted, 4) = 'The ' THEN
+    sorted := RIGHT(unsorted, LENGTH(unsorted) - 4) || ', The';
+  ELSIF LEFT(unsorted, 4) = 'the ' THEN
+    sorted := RIGHT(unsorted, LENGTH(unsorted) - 4) || ', the';
+  ELSIF LEFT(unsorted, 3) = 'An ' THEN
+    sorted := RIGHT(unsorted, LENGTH(unsorted) - 3) || ', An';
+  ELSIF LEFT(unsorted, 3) = 'an ' THEN
+    sorted := RIGHT(unsorted, LENGTH(unsorted) - 3) || ', an';
+  ELSIF LEFT(unsorted, 2) = 'A ' THEN
+    sorted := RIGHT(unsorted, LENGTH(unsorted) - 2) || ', A';
+  ELSIF LEFT(unsorted, 2) = 'a ' THEN
+    sorted := RIGHT(unsorted, LENGTH(unsorted) - 2) || ', a';
+  ELSE
+    sorted := unsorted;
+  END IF;
+  RETURN sorted;
+END;
+$$;
+
 CREATE TABLE series (
     series_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     series_title TEXT,
