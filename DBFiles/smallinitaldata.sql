@@ -81,3 +81,49 @@ COPY notes(note_short,note_long)
 FROM 'D:\Downloads\series_insert.csv'
 DELIMITER ','
 CSV HEADER;
+
+/*
+CREATE TABLE test_tab (
+    test_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    test_name TEXT
+);
+
+INSERT INTO test_tab (test_id,test_name)
+OVERRIDING SYSTEM VALUE
+    VALUES
+        (1,'test1'),
+        (2,'test2'),
+        (3,'test3');
+*/
+
+/*
+COPY ()
+FROM ''
+DELIMITER ','
+CSV HEADER;
+
+COPY ()
+FROM ''
+DELIMITER ','
+CSV HEADER;
+
+COPY ()
+FROM ''
+DELIMITER ','
+CSV HEADER;
+
+COPY ()
+FROM ''
+DELIMITER ','
+CSV HEADER;
+
+COPY ()
+FROM ''
+DELIMITER ','
+CSV HEADER;
+
+COPY ()
+FROM ''
+DELIMITER ','
+CSV HEADER;
+*/

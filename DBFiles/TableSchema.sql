@@ -143,12 +143,17 @@ CREATE TABLE character_versions (
     character_version_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     character_id INTEGER REFERENCES characters_primary (character_id),
     char_name TEXT,
-    char_name_alt_1 TEXT,
-    char_name_alt_2 TEXT,
     group_id INTEGER REFERENCES groups_t (group_id),
     group_name TEXT,
     earthOrigin INTEGER,
     earth_id INTEGER REFERENCES earths (earth_id)
+);
+
+CREATE TABLE character_alt_name (
+    char_alt_name_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    character_id INTEGER REFERENCES characters_primary (character_id),
+    character_version_id INTEGER REFERENCES character_versions (character_version_id),
+    char_alt_name TEXT
 );
 
 CREATE TABLE character_aliases (
