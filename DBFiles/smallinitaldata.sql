@@ -62,3 +62,22 @@ FROM 'D:\Downloads\Issues.csv'
 DELIMITER ','
 CSV HEADER;
 
+COPY mawoc_dc(series,vol_num,issue,issue_num,imprint,variant,note,printing,cover_month,cover_year,release_date,owned)
+FROM 'D:\Downloads\MAWoCDC.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY mawoc_digital(series,vol_num,issue,iss_num,cover_month,cover_year,release_date,owned)
+FROM 'D:\Downloads\MAWoCDigital.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY mawoc_promo(series,vol_num,issue,iss_num,variant,note,cover_month,cover_year,release_date,add_notes_owned)
+FROM 'D:\Downloads\MAWoCPromo.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY notes(note_short,note_long)
+FROM 'D:\Downloads\series_insert.csv'
+DELIMITER ','
+CSV HEADER;

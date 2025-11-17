@@ -69,7 +69,7 @@ CREATE TABLE date_sources (
 CREATE TABLE issues (
     issue_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     volume_id INTEGER REFERENCES volumes (volume_id),
-    issue_num INTEGER,
+    issue_num REAL,
     issue_type TEXT,
     issue_title TEXT,
     cover_month INTEGER,
