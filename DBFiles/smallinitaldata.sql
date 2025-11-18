@@ -62,7 +62,7 @@ FROM 'D:\Downloads\Issues.csv'
 DELIMITER ','
 CSV HEADER;
 
-COPY mawoc_dc(series,vol_num,issue,issue_num,imprint,variant,note,printing,cover_month,cover_year,release_date,owned)
+COPY mawoc_dc(series,vol_num,issue,iss_num,imprint,variant,note,printing,cover_month,cover_year,release_date,owned)
 FROM 'D:\Downloads\MAWoCDC.csv'
 DELIMITER ','
 CSV HEADER;
@@ -82,19 +82,6 @@ FROM 'D:\Downloads\series_insert.csv'
 DELIMITER ','
 CSV HEADER;
 
-/*
-CREATE TABLE test_tab (
-    test_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    test_name TEXT
-);
-
-INSERT INTO test_tab (test_id,test_name)
-OVERRIDING SYSTEM VALUE
-    VALUES
-        (1,'test1'),
-        (2,'test2'),
-        (3,'test3');
-*/
 
 /*
 COPY ()
