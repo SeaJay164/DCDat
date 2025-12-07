@@ -30,7 +30,7 @@ CREATE VIEW series_view AS
         JOIN volumes
             ON series.series_id = volumes.series_id
     GROUP BY series.series_title
-    ORDER BY article_sort(series.series_title) ASC;
+    ORDER BY article_sort(series.series_title) ASC);
 
 CREATE VIEW volumes_view1 AS 
     (SELECT series.series_title || ' Vol. ' || volumes.vol_num AS volume_title, 
@@ -49,7 +49,7 @@ CREATE VIEW volumes_view1 AS
             ON volumes.series_id = series.series_id
     GROUP BY volume_title
     ORDER BY article_sort(series.series_title) ASC
-    ORDER BY volumes.volume_num ASC;
+    ORDER BY volumes.volume_num ASC);
 
 CREATE VIEW volumes_view2 AS 
     (SELECT series.series_title,
@@ -74,11 +74,32 @@ CREATE VIEW volumes_view2 AS
             ON volumes.volume_id = issues.volume_id
     GROUP BY volume_title
     ORDER BY article_sort(series.series_title) ASC
-    ORDER BY volumes.volume_num ASC;
+    ORDER BY volumes.volume_num ASC);
 
 CREATE VIEW issues_view AS
-
-;
+    (SELECT series.series_title,
+        volumes.vol_num,
+        issues.iss_num,
+        issues.issue_type,
+        issues.issue_title,
+        series.series_title || ' Vol.' || volumes.vol_num|| issues.issue_type || ' # ' || issues.iss_num AS issue_vol_title,
+        issues.release_date,
+        COUNT(stories.*),
+        issues.cover_month,
+        issues.cover_year,
+        date_sources.d_source_name
+        issues.date_read
+    FROM issues
+        JOIN volumes
+            ON issues.volume_id = volumes.volume_id
+        Join series
+            ON volumes.series_id = series.series_id
+        Join date_sources
+            ON issues.date_source_id = date_sources.date_source_id
+    GROUP BY issue_vol_title
+    ORDER BY article_sort(series.series_title) ASC
+    ORDER BY volumes.volume_num ASC
+    ORDER BY issues.release_date ASC);
 
 CREATE VIEW stories_view AS
 

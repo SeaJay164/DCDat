@@ -82,6 +82,11 @@ FROM 'D:\Downloads\series_insert.csv'
 DELIMITER ','
 CSV HEADER;
 
+COPY arcs(arc,arc_event,issues)
+FROM 'D:\Downloads\Arcs.csv'
+DELIMITER ','
+CSV HEADER;
+
 
 /*
 COPY ()
