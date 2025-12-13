@@ -209,6 +209,7 @@ CREATE TABLE bg_order (
 
 CREATE TABLE flashpoint (
     fp_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    fp_num REAL,
     book TEXT
 );
 

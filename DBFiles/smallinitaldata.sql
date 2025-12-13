@@ -47,6 +47,53 @@ VALUES
         ('See Note'),
         ('Solicit');
 
+INSERT INTO eras (era)
+VALUES
+    ('Pre-Crisis'),
+    ('Hypertime'),
+    ('Interregnum'),
+    ('52'),
+    ('New 52'),
+    ('Rebirth'),
+    ('Dark Multiverse'),
+    ('All-In');
+
+INSERT INTO code_pull_num (code_time_hour, code_time_min,code_time_sec,code_time_sec_full)
+VALUES
+    (0,0,16.146,16.146),
+    (0,5,15.872,315.872),
+    (0,5,51.862,351.862),
+    (0,16,6.378,966.378),
+    (0,22,36.268,1356.268),
+    (0,57,3.926,3423.926),
+    (2,13,42.424,8022.424),
+    (3,27,3.502,12423.502);
+
+INSERT INTO volume_types (volume_type)
+VALUES
+    ('Limited'),
+    ('Ongoing');
+
+INSERT INTO collected (coll_title,coll_type,read_date)
+VALUES
+    ('DC vs. Vampires Vol. 1','TPB','2025-06-24'),
+    ('DC vs. Vampires Vol. 2','TPB','2025-06-25');
+
+INSERT INTO collections (collected_id,issue_id)
+VALUES
+    (1,13575),
+    (1,13576),
+    (1,13577),
+    (1,13578),
+    (1,13579),
+    (1,13580),
+    (2,13581),
+    (2,13582),
+    (2,13583),
+    (2,13584),
+    (2,13585),
+    (2,13586);
+
 COPY series(series_title,group_id)
 FROM 'D:\Downloads\public_series_export_2025-11-16_182835.csv'
 DELIMITER ','
@@ -87,35 +134,43 @@ FROM 'D:\Downloads\Arcs.csv'
 DELIMITER ','
 CSV HEADER;
 
+COPY bg_order(book,date1,story,date_note)
+FROM 'D:\Downloads\BGOrder.csv'
+DELIMITER ','
+CSV HEADER;
 
+COPY earths(earth,descr,era_id)
+FROM 'D:\Downloads\Earths.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY triangle(tri_year,tri_num,issue_id,series,issue_num)
+FROM 'D:\Downloads\Triangle.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY flashpoint(fp_num,book)
+FROM 'D:\Downloads\Flashpoint.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY fourth_world(book,issue_num)
+FROM 'D:\Downloads\FourthWorld.csv'
+DELIMITER ','
+CSV HEADER;
+
+COPY gl_order2(r_order,age,book,annual_special,volume_num,issue_num)
+FROM 'D:\Downloads\GLOrder2.csv'
+DELIMITER ','
+CSV HEADER;
 /*
 COPY ()
-FROM ''
+FROM 'D:\Downloads\.csv'
 DELIMITER ','
 CSV HEADER;
 
 COPY ()
-FROM ''
-DELIMITER ','
-CSV HEADER;
-
-COPY ()
-FROM ''
-DELIMITER ','
-CSV HEADER;
-
-COPY ()
-FROM ''
-DELIMITER ','
-CSV HEADER;
-
-COPY ()
-FROM ''
-DELIMITER ','
-CSV HEADER;
-
-COPY ()
-FROM ''
+FROM 'D:\Downloads\.csv'
 DELIMITER ','
 CSV HEADER;
 */
