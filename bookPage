@@ -1,0 +1,67 @@
+CREATE TABLE authors (
+    author_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    first_name TEXT,
+    middle_name TEXT,
+    last_name TEXT
+);
+
+CREATE TABLE books (
+    book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    book TEXT,
+    author_id INTEGER REFERS TO authors (author_id)
+);
+
+CREATE TABLE page_read (
+    page_read_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    read_date DATE,
+    book_id INTEGER REFERS TO books (book_id),
+    pages_read INTEGER
+);
+
+INSERT INTO books (book)
+VALUES
+    ($$The Golden Compass$$),
+    ($$The Ballad of Songbirds and Snakes$$),
+    ($$The Faceless Old Woman Who Secretly Lives in Your Home$$),
+    ($$The Castle of Llyr$$),
+    ($$Taran Wanderer$$),
+    ($$The High King$$),
+    ($$Inkspell$$),
+    ($$The Magician's Nephew$$),
+    ($$The Lion, the Witch and the Wardrobe$$),
+    ($$The Horse and His Boy$$),
+    ($$Prince Caspian$$),
+    ($$The Voyage of the Dawn Treader$$),
+    ($$The Silver Chair$$),
+    ($$The Last Battle$$),
+    ($$A Court of Thorns and Roses$$),
+    ($$Norse Mythology$$),
+    ($$The Subtle Knife$$),
+    ($$The Amber Spyglass$$),
+    ($$The Magicians$$),
+    ($$The Hitchhiker's Guide to the Galaxy$$),
+    ($$The Restaurant at the End of the Universe$$),
+    ($$Life, the Universe and Everything$$),
+    ($$A Court of Mist and Fury$$),
+    ($$The Old Man and the Sea$$),
+    ($$A Month in the Country$$),
+    ($$Out of the Silent Planet$$),
+    ($$The Westing Game$$),
+    ($$Every Heart a Doorway$$),
+    ($$Before the Coffee Gets Cold$$),
+    ($$Stardust$$),
+    ($$The Mysterious Affar at Styles$$),
+    ($$Meddling Kids$$),
+    ($$This Is How You Lose the Time War$$),
+    ($$The Final Girl Suppport Group$$),
+    ($$A House with Good Bones$$),
+    ($$Small Things Like These$$),
+    ($$Doors of Darkness$$),
+    ($$So Long, and Thanks for All the Fish$$),
+    ($$A Court of Wings and Ruin$$),
+    ($$The Troop$$),
+    ($$The Saturday Night Ghost Club$$),
+    ($$The Maltese Falcon$$),
+    ($$The Sympathizer$$),
+    ($$Dracula Daily$$),
+    ($$Remarkably Bright Creatures$$);
