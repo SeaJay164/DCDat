@@ -1,6 +1,6 @@
 CREATE TABLE authors (
     author_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    author_name TEXT,
+    author_name TEXT
 );
 
 CREATE TABLE books (
