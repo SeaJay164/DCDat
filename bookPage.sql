@@ -440,3 +440,65 @@ VALUES
     ('2024-10-14', 44, 1),
     ('2025-01-12', 44, 2),
     ('2024-05-11', 45, 10);
+
+
+CREATE TABLE novel_series_series (
+    novel_series_series_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    novel_series_series
+);
+
+CREATE TABLE novel_series (
+    novel_series_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    novel_series
+    novel_series_series_id INTEGER REFERS TO novel_series_series (novel_series_series_id)
+);
+
+CREATE TABLE reading_orders (
+    reading_order_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    novel_series_series_id INTEGER REFERS TO novel_series (novel_series_series_id)
+    book TEXT,
+    order_num INTEGER
+);
+
+INSERT INTO novel_series_series (novel_series_series)
+VALUES
+    ('Cosmere')
+    ('Riordan');
+
+INSERT INTO novel_series (novel_series)
+VALUES
+    ('Mistborn Era 1', 1),
+    ('The Stormlight Archive', 1),
+    ('Mistborn Era 2', 1);
+
+INSERT INTO reading_orders (novel_series_series_id, book, order_num)
+VALUES
+    (1, $$mistborn era 1: the final empire$$, 1),
+    (1, $$mistborn era 1: the well of ascension$$, 2),
+    (1, $$mistborn era 1: the hero of ages$$, 3),
+    (1, $$mistborn era 1: *the eleventh metal$$, 4),
+    (1, $$warbreaker$$, 5),
+    (1, $$tress of the emerald sea$$, 6),
+    (1, $$stormlight archive: the way of kings$$, 7),
+    (1, $$elantris$$, 8),
+    (1, $$*the hope of elantris$$, 9),
+    (1, $$*the emperor's soul$$, 10),
+    (1, $$stormlight archive: word of radiance$$, 11),
+    (1, $$*edgedancer$$, 12),
+    (1, $$mistborn era 2: the alloy of law$$, 13),
+    (1, $$mistborn era 2: *allomancer jak$$, 14),
+    (1, $$mistborn era 2: shadows of self$$, 15),
+    (1, $$mistborn era 2: the bands of mourning$$, 16),
+    (1, $$mistborn era 2: *mistborn: secret history$$, 17),
+    (1, $$mistborn era 2: the lot metal$$, 18),
+    (1, $$*arcanum unbounded essays$$, 19),
+    (1, $$*shadows for silence$$, 20),
+    (1, $$stormlight archive: oathbringer$$, 21),
+    (1, $$*dawnshard$$, 22),
+    (1, $$yumi and the nightmare painter$$, 23),
+    (1, $$white sand$$, 24),
+    (1, $$stormlight archive: rhythm of war$$, 25),
+    (1, $$(horneater)$$, 26),
+    (1, $$the sunlit man$$, 27),
+    (1, $$stormlight archive: wind and truth$$, 28),
+    (1, $$isles of the emberdark (includes *sixth of the dusk)$$, 29);
