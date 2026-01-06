@@ -22,7 +22,7 @@ CREATE TABLE page_read (
     pages_read INTEGER
 );
 
-INSERT INTO authors (author_name) -- there should be 55 authors, but I only have 54
+INSERT INTO authors (author_name)
 VALUES
     ('Philip Pullman'),
     ('Suzanne Collins'),
@@ -399,6 +399,7 @@ VALUES
     ('2025-09-25', 40, 37),
     ('2025-09-26', 40, 21),
     ('2025-09-29', 40, 34),
+    ('2026-01-05', 40, 47),
     ('2025-08-31', 41, 56),
     ('2024-11-13', 42, 7),
     ('2024-08-12', 43, 46),
@@ -438,5 +439,4 @@ VALUES
     ('2024-10-09', 44, 3),
     ('2024-10-14', 44, 1),
     ('2025-01-12', 44, 2),
-    ('2024-05-11', 45, 10),
-    ('2026-01-05', 40, 47);
+    ('2024-05-11', 45, 10);
