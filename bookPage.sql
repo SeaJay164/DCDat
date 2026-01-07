@@ -126,7 +126,8 @@ VALUES
     ($$The Maltese Falcon$$),
     ($$The Sympathizer$$),
     ($$Dracula Daily$$),
-    ($$Remarkably Bright Creatures$$);
+    ($$Remarkably Bright Creatures$$),
+    ($$A Court of Frost and Starlight$$);
 
 INSERT INTO book_authors (book_id, author_id)
 VALUES
@@ -201,7 +202,8 @@ VALUES
     (42, 52),
     (43, 53),
     (44, 54),
-    (45, 55);
+    (45, 55),
+    (46, 8);
 
 INSERT INTO page_read (read_date, book_id, pages_read)
 VALUES
@@ -400,6 +402,8 @@ VALUES
     ('2025-09-26', 40, 21),
     ('2025-09-29', 40, 34),
     ('2026-01-05', 40, 47),
+    ('2026-01-06', 40, 65),
+    ('2026-01-06', 46, 29),
     ('2025-08-31', 41, 56),
     ('2024-11-13', 42, 7),
     ('2024-08-12', 43, 46),
