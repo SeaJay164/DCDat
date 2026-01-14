@@ -520,3 +520,20 @@ VALUES
     (1, $$the sunlit man$$, 27),
     (1, $$stormlight archive: wind and truth$$, 28),
     (1, $$isles of the emberdark (includes *sixth of the dusk)$$, 29);
+
+' --delete this later
+
+--query for percent complete
+SELECT book, (SUM(pages_read)/pages*100) AS percent_complete, MAX(read_date) AS last_read
+FROM books
+JOIN page_read ON books.book_id = page_read.book_id
+GROUP BY book, percent_complete, last_read
+ORDER BY last_read DESC;
+
+--query for percent complete active books
+SELECT book, (SUM(pages_read)/pages*100) AS percent_complete, MAX(read_date) AS last_read
+FROM books
+JOIN page_read ON books.book_id = page_read.book_id
+GROUP BY book, percent_complete, last_read
+ORDER BY last_read DESC
+WHERE percent_complete < 100;
