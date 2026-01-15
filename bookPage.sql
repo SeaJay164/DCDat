@@ -22,10 +22,15 @@ CREATE TABLE ratings (
     rating INTEGER --out of 10
 );
 
+CREATE TABLE read_runs (
+    read_run_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    book_id INTEGER REFERS TO books (book_id)
+);
+
 CREATE TABLE page_read (
     page_read_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     read_date DATE,
-    book_id INTEGER REFERS TO books (book_id),
+    read_run_id INTEGER REFERS TO read_runs (read_run_id),
     pages_read INTEGER
 );
 
@@ -85,7 +90,8 @@ VALUES
     ('Dashiell Hammett'),
     ('Viet Thanh Nguyen'),
     ('Bram Stoker'),
-    ('Shelby Van Pelt');
+    ('Shelby Van Pelt'),
+    ('Emily Bronte');
 
 INSERT INTO books (book, pages)
 VALUES
@@ -134,7 +140,8 @@ VALUES
     ($$The Sympathizer$$, 445),
     ($$Dracula Daily$$, 111),
     ($$Remarkably Bright Creatures$$, 368),
-    ($$A Court of Frost and Starlight$$, 229);
+    ($$A Court of Frost and Starlight$$, 229),
+    ($$Wuthering Heights$$, 316);
 
 INSERT INTO book_authors (book_id, author_id)
 VALUES
@@ -210,13 +217,65 @@ VALUES
     (43, 53),
     (44, 54),
     (45, 55),
-    (46, 8);
+    (46, 8),
+    (47, 56);
 
 INSERT INTO ratings (book_id, rating)
 VALUES
-    (40, 7.5);
+    (40, 7.5),
+    (46, 9.5);
 
-INSERT INTO page_read (read_date, book_id, pages_read)
+INSERT INTO read_runs (book_id)
+VALUES
+    (1),
+    (2),
+    (3),
+    (4),
+    (5),
+    (6),
+    (7),
+    (8),
+    (9),
+    (10),
+    (11),
+    (12),
+    (13),
+    (14),
+    (15),
+    (16),
+    (17),
+    (18),
+    (19),
+    (20),
+    (21),
+    (22),
+    (23),
+    (24),
+    (25),
+    (26),
+    (27),
+    (28),
+    (29),
+    (30),
+    (31),
+    (32),
+    (33),
+    (34),
+    (35),
+    (36),
+    (37),
+    (38),
+    (39),
+    (40),
+    (41),
+    (42),
+    (43),
+    (44),
+    (45),
+    (46),
+    (47);
+
+INSERT INTO page_read (read_date, read_run_id, pages_read)
 VALUES
     ('2023-10-12', 1, 129),
     ('2023-10-17', 1, 34),
@@ -261,7 +320,7 @@ VALUES
     ('2023-11-30', 12, 77),
     ('2023-11-30', 13, 102),
     ('2023-12-01', 13, 146),
-    ('2023-12-03', 13, 260),
+    ('2023-12-03', 13, 114),
     ('2023-12-05', 14, 234),
     ('2023-12-07', 15, 47),
     ('2023-12-08', 15, 34),
@@ -457,7 +516,9 @@ VALUES
     ('2026-01-06', 46, 29),
     ('2026-01-07', 46, 15),
     ('2026-01-08', 46, 14),
-    ('2026-01-12', 46, 4);
+    ('2026-01-12', 46, 4),
+    ('2026-01-13', 46, 12),
+    ('2026-01-14', 46, 155);
 
 
 CREATE TABLE novel_series_series (
