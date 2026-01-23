@@ -78,7 +78,7 @@ VALUES
     (419,7,'zStandard','2022-12-27',3,3,'2026-01-19'), --beyond white night 7
     (419,8,'zStandard','2023-02-14',3,3,'2026-01-20'), --beyond white night 8
     (518,1,'zStandard','2023-05-09',3,3,'2026-01-20'), --white night GJ 1
-    (518,2,'zStandard','2023-06-20',3,3,''), --white night GJ 2
+    (518,2,'zStandard','2023-06-20',3,3,'2026-01-23'), --white night GJ 2
     (518,3,'zStandard','2023-07-18',3,3,''), --white night GJ 3
     (518,4,'zStandard','2023-08-15',3,3,''), --white night GJ 4
     (518,5,'zStandard','2023-09-19',3,3,''), --white night GJ 5
@@ -95,4 +95,5 @@ WHERE issue_id = ; --absolute batman 15
 UPDATE issues
 SET read_date = '2026-01-16'
 WHERE issue_id = ; --absolute flash 10
+
 
