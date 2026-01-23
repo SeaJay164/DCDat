@@ -9,6 +9,22 @@ CREATE TABLE books (
     pages INTEGER
 );
 
+CREATE TABLE edition_types (
+    edition_type_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    edition_type TEXT
+);
+
+CREATE TABLE editions (
+    edition_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    book_id INTEGER REFERS TO books (book_id),
+    edition_type_id INTEGER REFERS TO edition_types (edition_type_id),
+    pub_date DATE,
+    pages INTEGER,
+    isbn_ten TEXT CHECK(LENGTH(isbn_ten) = 13),
+    isbn_thirteen TEXT CHECK(LENGTH(isbn_thirteen) = 17),
+    asin TEXT CHECK(LENGTH(asin) = 10)
+);
+
 CREATE TABLE book_authors (
     book_author_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     book_id INTEGER REFERS TO books (book_id),
@@ -151,6 +167,10 @@ VALUES
     ($$The Last Olympian$$, 381),
     ($$The Martian$$, 384)
     ($$Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch$$, 383);
+
+INSERT INTO edition_types (edition_type)
+VALUES
+        ('Paperback')
 
 INSERT INTO book_authors (book_id, author_id)
 VALUES
