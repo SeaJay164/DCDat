@@ -6,7 +6,6 @@ CREATE TABLE authors (
 CREATE TABLE books (
     book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     book TEXT,
-    author_id INTEGER REFERS TO authors (author_id),
     pages INTEGER
 );
 
@@ -91,7 +90,10 @@ VALUES
     ('Viet Thanh Nguyen'),
     ('Bram Stoker'),
     ('Shelby Van Pelt'),
-    ('Emily Bronte');
+    ('Emily Bronte'),
+    ('Rick Riordan'),
+    ('Andy Weir'),
+    ('Terry Pratchett');
 
 INSERT INTO books (book, pages)
 VALUES
@@ -141,7 +143,14 @@ VALUES
     ($$Dracula Daily$$, 111),
     ($$Remarkably Bright Creatures$$, 368),
     ($$A Court of Frost and Starlight$$, 229),
-    ($$Wuthering Heights$$, 316);
+    ($$Wuthering Heights$$, 316)
+    ($$The Lightning Thief$$, 377),
+    ($$The Sea of Monsters$$, 279),
+    ($$The Titan's Curse$$, 352), ' --delete this apostrophe later
+    ($$The Battle of the Labyrinth$$, 361),
+    ($$The Last Olympian$$, 381),
+    ($$The Martian$$, 384)
+    ($$Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch$$, 383);
 
 INSERT INTO book_authors (book_id, author_id)
 VALUES
@@ -218,7 +227,15 @@ VALUES
     (44, 54),
     (45, 55),
     (46, 8),
-    (47, 56);
+    (47, 56),
+    (48, 57),
+    (49, 57),
+    (50, 57),
+    (51, 57),
+    (52, 57),
+    (53, 58),
+    (54, 59),
+    (54, 9);
 
 INSERT INTO ratings (book_id, rating)
 VALUES
@@ -561,7 +578,7 @@ VALUES
     (1, $$stormlight archive: the way of kings$$, 7),
     (1, $$elantris$$, 8),
     (1, $$*the hope of elantris$$, 9),
-    (1, $$*the emperor's soul$$, 10),
+    (1, $$*the emperor's soul$$, 10), ' --delete this apostrophe later
     (1, $$stormlight archive: word of radiance$$, 11),
     (1, $$*edgedancer$$, 12),
     (1, $$mistborn era 2: the alloy of law$$, 13),
@@ -582,7 +599,6 @@ VALUES
     (1, $$stormlight archive: wind and truth$$, 28),
     (1, $$isles of the emberdark (includes *sixth of the dusk)$$, 29);
 
-' --delete this later
 
 --query for percent complete
 SELECT book, (SUM(pages_read)/pages*100) AS percent_complete, MAX(read_date) AS last_read
