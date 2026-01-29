@@ -42,6 +42,7 @@ INSERT INTO volumes (series_id, vol_num, volume_name, year_start, year_end, fan_
 VALUES
     (352, 3, 'Batman: White Knight Presents Von Freeze', 2019, 2019, 1, 'https://dc.fandom.com/wiki/Batman:_White_Knight_Presents_Von_Freeze_Vol_1_1'); --white night VF
 
+--white night vf below needs volume number
 INSERT INTO issues (volume_id, issue_num, issue_type, issue_title, release_date, date_source_id, pub_id, date_read)
 VALUES
     (516,1,'zStandard','2017-10-04',3,3,'2025-12-25'), --white night 1
@@ -79,10 +80,10 @@ VALUES
     (419,8,'zStandard','2023-02-14',3,3,'2026-01-20'), --beyond white night 8
     (518,1,'zStandard','2023-05-09',3,3,'2026-01-20'), --white night GJ 1
     (518,2,'zStandard','2023-06-20',3,3,'2026-01-23'), --white night GJ 2
-    (518,3,'zStandard','2023-07-18',3,3,''), --white night GJ 3
-    (518,4,'zStandard','2023-08-15',3,3,''), --white night GJ 4
-    (518,5,'zStandard','2023-09-19',3,3,''), --white night GJ 5
-    (518,6,'zStandard','2023-10-17',3,3,''); --white night GJ 6
+    (518,3,'zStandard','2023-07-18',3,3,'2026-01-27'), --white night GJ 3
+    (518,4,'zStandard','2023-08-15',3,3,'2026-01-28'), --white night GJ 4
+    (518,5,'zStandard','2023-09-19',3,3,'2026-01-29'), --white night GJ 5
+    (518,6,'zStandard','2023-10-17',3,3,'2026-01-29'); --white night GJ 6
 
 UPDATE issues
 SET read_date = '2026-01-02'
@@ -96,4 +97,27 @@ UPDATE issues
 SET read_date = '2026-01-16'
 WHERE issue_id = ; --absolute flash 10
 
+UPDATE issues
+SET read_date = '2026-0-'
+WHERE issue_id = ; --absolute martian 7
+
+UPDATE issues
+SET read_date = '2026-0'
+WHERE issue_id = ; --absolute wonder 15
+
+UPDATE issues
+SET read_date = '2026-0'
+WHERE issue_id = ; --absolute superman 14
+
+UPDATE issues
+SET read_date = '2026-'
+WHERE issue_id = ; --last knight 1
+
+UPDATE issues
+SET read_date = '2026-'
+WHERE issue_id = ; --last knight 2
+
+UPDATE issues
+SET read_date = '2026-'
+WHERE issue_id = ; --last knight 3
 
