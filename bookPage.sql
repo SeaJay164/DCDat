@@ -166,7 +166,8 @@ VALUES
     ($$The Battle of the Labyrinth$$, 361),
     ($$The Last Olympian$$, 381),
     ($$The Martian$$, 384)
-    ($$Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch$$, 383);
+    ($$Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch$$, 383),
+    ($$Project Hail Mary$$, 474);
 
 INSERT INTO edition_types (edition_type)
 VALUES
@@ -255,7 +256,8 @@ VALUES
     (52, 57),
     (53, 58),
     (54, 59),
-    (54, 9);
+    (54, 9),
+    (55, 58);
 
 INSERT INTO ratings (book_id, rating)
 VALUES
@@ -310,7 +312,7 @@ VALUES
     (44),
     (45),
     (46),
-    (47);
+    (55);
 
 INSERT INTO page_read (read_date, read_run_id, pages_read)
 VALUES
