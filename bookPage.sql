@@ -109,7 +109,8 @@ VALUES
     ('Emily Bronte'),
     ('Rick Riordan'),
     ('Andy Weir'),
-    ('Terry Pratchett');
+    ('Terry Pratchett'),
+    ('Pierce Brown');
 
 INSERT INTO books (book, pages)
 VALUES
@@ -167,7 +168,8 @@ VALUES
     ($$The Last Olympian$$, 381),
     ($$The Martian$$, 384)
     ($$Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch$$, 383),
-    ($$Project Hail Mary$$, 474);
+    ($$Project Hail Mary$$, 474),
+    ($$Red Rising$$, 382);
 
 INSERT INTO edition_types (edition_type)
 VALUES
@@ -257,12 +259,14 @@ VALUES
     (53, 58),
     (54, 59),
     (54, 9),
-    (55, 58);
+    (55, 58)
+    (56, 60);
 
 INSERT INTO ratings (book_id, rating)
 VALUES
     (40, 7.5),
-    (46, 9.5);
+    (46, 9.5)
+    (55, 9.5);
 
 INSERT INTO read_runs (book_id)
 VALUES
@@ -312,7 +316,8 @@ VALUES
     (44),
     (45),
     (46),
-    (55);
+    (55),
+    (56);
 
 INSERT INTO page_read (read_date, read_run_id, pages_read)
 VALUES
@@ -557,7 +562,16 @@ VALUES
     ('2026-01-08', 46, 14),
     ('2026-01-12', 46, 4),
     ('2026-01-13', 46, 12),
-    ('2026-01-14', 46, 155);
+    ('2026-01-14', 46, 155),
+    ('2026-03-22', 47, 154.5),
+    ('2026-03-23', 47, 104.5),
+    ('2026-03-24', 47, 120),
+    ('2026-03-25', 47, 95),
+    ('2026-03-26', 48, 9),
+    ('2026-03-28', 48, 25),
+    ('2026-03-29', 48, 89),
+    ('2026-03-30', 48, 39),
+    ('2026-03-31', 48, 27);
 
 
 CREATE TABLE novel_series_series (
@@ -636,3 +650,22 @@ JOIN page_read ON books.book_id = page_read.book_id
 GROUP BY book, percent_complete, last_read
 ORDER BY last_read DESC
 WHERE percent_complete < 100;
+
+--for adding new book and authors at same time
+--INSERT INTO books (book, pages) VALUES ($$book title$$, page#) RETURNING book_id INTO b_id;
+--WITH new_authors AS (
+--    INSERT INTO authors (author_name) VALUES ('author name') RETURNING author_id
+--)
+--DO
+--$$
+--DECLARE
+--    a record;
+--BEGIN
+--    FOR a IN SELECT author_id
+--        FROM new_authors
+--    LOOP
+--        INSERT INTO book_authors (book_id, author_id) VALUES (b_id, a.author_id);
+--    END LOOP
+--END; $$;
+
+
