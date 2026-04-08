@@ -3,9 +3,16 @@ CREATE TABLE authors (
     author_name TEXT
 );
 
+CREATE TABLE languages (
+    language_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    lang TEXT
+);
+
+INSERT INTO languages (lang) VALUES ('English'), ('German'), ('Japanese');
+
 CREATE TABLE books (
     book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    book_title TEXT
+    book_title TEXT,
 );
 
 CREATE TABLE edition_types (
@@ -21,12 +28,14 @@ CREATE TABLE editions (
     pages INTEGER,
     isbn_ten TEXT CHECK(LENGTH(isbn_ten) = 13),
     isbn_thirteen TEXT CHECK(LENGTH(isbn_thirteen) = 17),
-    asin TEXT CHECK(LENGTH(asin) = 10)
+    asin TEXT CHECK(LENGTH(asin) = 10),
+    language_id INTEGER REFERS TO languages (language_id) DEFAULT 1,
+    first_edition BOOLEAN NOT NULL SET DEFAULT FALSE
 );
 
 CREATE TABLE book_authors (
     book_author_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    book_id INTEGER REFERS TO books (book_id),
+    edition_id INTEGER REFERS TO editions (edition_id),
     author_id INTEGER REFERS TO authors (author_id)
 );
 
@@ -38,7 +47,7 @@ CREATE TABLE ratings (
 
 CREATE TABLE read_runs (
     read_run_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    book_id INTEGER REFERS TO books (book_id)
+    edition_id INTEGER REFERS TO editions (edition_id)
 );
 
 CREATE TABLE page_read (
@@ -109,7 +118,8 @@ VALUES
     ('Rick Riordan'),
     ('Andy Weir'),
     ('Terry Pratchett'),
-    ('Pierce Brown');
+    ('Pierce Brown'),
+    ('Brandon Sanderson');
 
 INSERT INTO books (book_title)
 VALUES
@@ -162,7 +172,7 @@ VALUES
     ($$Wuthering Heights$$)
     ($$The Lightning Thief$$),
     ($$The Sea of Monsters$$),
-    ($$The Titan's Curse$$), ' --delete this apostrophe later
+    ($$The Titan's Curse$$),
     ($$The Battle of the Labyrinth$$),
     ($$The Last Olympian$$),
     ($$The Martian$$)
@@ -170,6 +180,7 @@ VALUES
     ($$Project Hail Mary$$),
     ($$Red Rising$$),
     ($$Sunrise on the Reaping$$),
+    --cosmere books below. insert needs fixing
     ($$mistborn era 1: the final empire$$),
     ($$mistborn era 1: the well of ascension$$),
     ($$mistborn era 1: the hero of ages$$),
@@ -179,7 +190,7 @@ VALUES
     ($$stormlight archive: the way of kings$$),
     ($$elantris$$),
     ($$*the hope of elantris$$),
-    ($$*the emperor's soul$$), ' --delete this apostrophe later
+    ($$*the emperor's soul$$),
     ($$stormlight archive: word of radiance$$),
     ($$*edgedancer$$),
     ($$mistborn era 2: the alloy of law$$),
@@ -199,9 +210,13 @@ VALUES
     ($$the sunlit man$$),
     ($$stormlight archive: wind and truth$$),
     ($$isles of the emberdark (includes *sixth of the dusk)$$),
+    --cosmere books above. insert needs fixing
     ($$The Hunger Games$$),
     ($$Catching Fire$$),
-    ($$Mocking Jay$$);
+    ($$Mocking Jay$$),
+    ($$Inkheart$$),
+    ($$Inkdeath$$),
+    ($$The Color of Revenge$$);
 
 INSERT INTO edition_types (edition_type)
 VALUES
@@ -213,99 +228,155 @@ VALUES
 
 INSERT INTO editions (book_id, edition_type_id, pub_date, pages, isbn_ten, isbn_thirteen, asin)
 VALUES
-    (1, 1, /*pub_date*/, 399, /*isbn10*/, /*isbn13*/, NULL), --The Golden Compass
-    (2, 1, /*pub_date*/, 520, /*isbn10*/, /*isbn13*/, NULL), --The Ballad of Songbirds and Snakes
-    (3, 2, /*pub_date*/, 292, /*isbn10*/, /*isbn13*/, NULL), --The Faceless Old Woman Who Secretly Lives in Your Home
-    (4, 1, /*pub_date*/, 174, /*isbn10*/, /*isbn13*/, NULL), --The Castle of Llyr
-    (5, 1, /*pub_date*/, 222, /*isbn10*/, /*isbn13*/, NULL), --Taran Wanderer
-    (6, 1, /*pub_date*/, 253, /*isbn10*/, /*isbn13*/, NULL), --The High King
-    (7, 1, /*pub_date*/, 236, /*isbn10*/, /*isbn13*/, NULL), --Inkspell
-    (8, 1, /*pub_date*/, 202, /*isbn10*/, /*isbn13*/, NULL), --The Magician's Nephew
-    (9, 1, /*pub_date*/, 189, /*isbn10*/, /*isbn13*/, NULL), --The Lion, the Witch and the Wardrobe
-    (10, 1, /*pub_date*/, 224, /*isbn10*/, /*isbn13*/, NULL), --The Horse and His Boy
-    (11, 1, /*pub_date*/, 130, /*isbn10*/, /*isbn13*/, NULL), --Prince Caspian
-    (12, 3, /*pub_date*/, 140, /*isbn10*/, /*isbn13*/, 'B00ALKNFJC'), --The Voyage of the Dawn Treader
-    (13, 3, /*pub_date*/, 260, /*isbn10*/, /*isbn13*/, 'B004DNWQ34'), --The Silver Chair
-    (14, 3, /*pub_date*/, 234, /*isbn10*/, /*isbn13*/, '9780061974144'), --The Last Battle
-    (15, 1, /*pub_date*/, 419, /*isbn10*/, /*isbn13*/, NULL), --A Court of Thorns and Roses
-    (16, 1, /*pub_date*/, 301, /*isbn10*/, /*isbn13*/, NULL), --Norse Mythology
-    (17, 1, /*pub_date*/, 384, /*isbn10*/, /*isbn13*/, NULL), --The Subtle Knife
-    (18, 1, /*pub_date*/, 533, /*isbn10*/, /*isbn13*/, NULL), --The Amber Spyglass
-    (19, 1, /*pub_date*/, 402, /*isbn10*/, /*isbn13*/, NULL), --The Magicians
-    (20, 4, /*pub_date*/, 215, /*isbn10*/, /*isbn13*/, NULL), --The Hitchhiker's Guide to the Galaxy
-    (21, 4, /*pub_date*/, 250, /*isbn10*/, /*isbn13*/, NULL), --The Restaurant at the End of the Universe
-    (22, 4, /*pub_date*/, 240, /*isbn10*/, /*isbn13*/, NULL), --Life, the Universe and Everything
-    (23, 1, /*pub_date*/, 626, /*isbn10*/, /*isbn13*/, NULL), --A Court of Mist and Fury
-    (24, 3, /*pub_date*/, 128, /*isbn10*/, /*isbn13*/, 'B000FC0SH8'), --The Old Man and the Sea
-    (25, 3, /*pub_date*/, 135, /*isbn10*/, /*isbn13*/, 'B0093UMLC8'), --A Month in the Country
-    (26, 3, /*pub_date*/, 173, /*isbn10*/, /*isbn13*/, 'B006L8723I'), --Out of the Silent Planet
-    (27, 3, /*pub_date*/, 204, /*isbn10*/, /*isbn13*/, 'B002VFPRTQ'), --The Westing Game
-    (28, 3, /*pub_date*/, 174, /*isbn10*/, /*isbn13*/, 'B0DLSF7SYH'), --Every Heart a Doorway
-    (29, 2, /*pub_date*/, 213, /*isbn10*/, /*isbn13*/, NULL), --Before the Coffee Gets Cold
-    (30, 1, /*pub_date*/, 271, /*isbn10*/, /*isbn13*/, NULL), --Stardust
-    (31, 1, /*pub_date*/, 212, /*isbn10*/, /*isbn13*/, NULL), --The Mysterious Affar at Styles
-    (32, 3, /*pub_date*/, 322, /*isbn10*/, /*isbn13*/, 'B01M3WPB83'), --Meddling Kids
-    (33, 3, /*pub_date*/, 198, /*isbn10*/, /*isbn13*/, 'B07MNG496J'), --This Is How You Lose the Time War
-    (34, 3, /*pub_date*/, 342, /*isbn10*/, /*isbn13*/, 'B08MBQKTTQ'), --The Final Girl Suppport Group
-    (35, 1, /*pub_date*/, 272, /*isbn10*/, /*isbn13*/, NULL), --A House with Good Bones
-    (36, 2, /*pub_date*/, 114, /*isbn10*/, /*isbn13*/, NULL), --Small Things Like These
-    (37, 1, /*pub_date*/, 320, /*isbn10*/, /*isbn13*/, NULL), --Doors of Darkness
-    (38, 4, /*pub_date*/, 204, /*isbn10*/, /*isbn13*/, NULL), --So Long, and Thanks for All the Fish
-    (39, 1, /*pub_date*/, 699, /*isbn10*/, /*isbn13*/, NULL), --A Court of Wings and Ruin
-    (40, 1, /*pub_date*/, 355, /*isbn10*/, /*isbn13*/, NULL), --The Troop
-    (41, 3, /*pub_date*/, 222, /*isbn10*/, /*isbn13*/, 'B07JW24LWW'), --The Saturday Night Ghost Club
-    (42, 3, /*pub_date*/, 128, /*isbn10*/, /*isbn13*/, 'B004G5ZU32'), --The Maltese Falcon
-    (43, 3, /*pub_date*/, 445, /*isbn10*/, /*isbn13*/, 'B00PSSG4MM'), --The Sympathizer
-    (44, 5, /*pub_date*/, 111, /*isbn10*/, /*isbn13*/, NULL), --Dracula Daily
-    (45, 2, /*pub_date*/, 368, /*isbn10*/, /*isbn13*/, NULL), --Remarkably Bright Creatures
-    (46, 1, /*pub_date*/, 229, /*isbn10*/, /*isbn13*/, NULL), --A Court of Frost and Starlight
-    (47, 2, /*pub_date*/, 316, /*isbn10*/, /*isbn13*/, NULL), --Wuthering Heights
-    (48, 1, /*pub_date*/, 377, /*isbn10*/, /*isbn13*/, NULL), --The Lightning Thief
-    (49, 1, /*pub_date*/, 279, /*isbn10*/, /*isbn13*/, NULL), --The Sea of Monsters
-    (50, 1, /*pub_date*/, 352, /*isbn10*/, /*isbn13*/, NULL), --The Titan's Curse
-    (51, 1, /*pub_date*/, 361, /*isbn10*/, /*isbn13*/, NULL), --The Battle of the Labyrinth
-    (52, 1, /*pub_date*/, 381, /*isbn10*/, /*isbn13*/, NULL), --The Last Olympian
-    (53, 1, /*pub_date*/, 384, /*isbn10*/, /*isbn13*/, NULL), --The Martian
-    (54, 3, /*pub_date*/, 383, /*isbn10*/, /*isbn13*/, 'B0054LJGWS'), --Good Omens
-    (55, 1, /*pub_date*/, 474, /*isbn10*/, /*isbn13*/, NULL), --Project Hail Mary
-    (56, 1, /*pub_date*/, 382, /*isbn10*/, /*isbn13*/, NULL), --Red Rising
-    (57, 2, /*pub_date*/, 382, /*isbn10*/, /*isbn13*/, NULL), --Sunrise on the Reaping
-    (58, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (59, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (60, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (61, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (62, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (63, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (64, 1, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --The Way of Kings
-    (65, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (66, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (67, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (68, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (69, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (70, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (71, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (72, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (73, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (74, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (75, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (76, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (77, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (78, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (79, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (80, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (81, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (82, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (83, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (84, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (85, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (86, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --
-    (87, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --The Hunger Games
-    (88, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --Catching Fire
-    (89, /*edition_type*/, /*pub_date*/, NULL, /*isbn10*/, /*isbn13*/, NULL), --Mocking Jay
-    (34, 3, /*pub_date*/, 342, /*isbn10*/, /*isbn13*/, NULL), --The Final Girl Suppport Group
-    (52, /*edition_type*/, /*pub_date*/, 381, /*isbn10*/, /*isbn13*/, NULL); --The Last Olympian
+    (1, 1, NULL, 399, NULL, NULL, NULL), --The Golden Compass
+    (2, 1, NULL, 520, NULL, NULL, NULL), --The Ballad of Songbirds and Snakes
+    (3, 2, NULL, 292, NULL, NULL, NULL), --The Faceless Old Woman Who Secretly Lives in Your Home
+    (4, 1, NULL, 174, NULL, NULL, NULL), --The Castle of Llyr
+    (5, 1, NULL, 222, NULL, NULL, NULL), --Taran Wanderer
+    (6, 1, NULL, 253, NULL, NULL, NULL), --The High King
+    (7, 1, NULL, 236, NULL, NULL, NULL), --Inkspell
+    (8, 1, NULL, 202, NULL, NULL, NULL), --The Magician's Nephew
+    (9, 1, NULL, 189, NULL, NULL, NULL), --The Lion, the Witch and the Wardrobe
+    (10, 1, NULL, 224, NULL, NULL, NULL), --The Horse and His Boy
+    (11, 1, NULL, 130, NULL, NULL, NULL), --Prince Caspian
+    (12, 3, NULL, 140, NULL, NULL, 'B00ALKNFJC'), --The Voyage of the Dawn Treader
+    (13, 3, NULL, 260, NULL, NULL, 'B004DNWQ34'), --The Silver Chair
+    (14, 3, NULL, 234, NULL, NULL, '9780061974144'), --The Last Battle
+    (15, 1, NULL, 419, NULL, NULL, NULL), --A Court of Thorns and Roses
+    (16, 1, NULL, 301, NULL, NULL, NULL), --Norse Mythology
+    (17, 1, NULL, 384, NULL, NULL, NULL), --The Subtle Knife
+    (18, 1, NULL, 533, NULL, NULL, NULL), --The Amber Spyglass
+    (19, 1, NULL, 402, NULL, NULL, NULL), --The Magicians
+    (20, 4, NULL, 215, NULL, NULL, NULL), --The Hitchhiker's Guide to the Galaxy
+    (21, 4, NULL, 250, NULL, NULL, NULL), --The Restaurant at the End of the Universe
+    (22, 4, NULL, 240, NULL, NULL, NULL), --Life, the Universe and Everything
+    (23, 1, NULL, 626, NULL, NULL, NULL), --A Court of Mist and Fury
+    (24, 3, NULL, 128, NULL, NULL, 'B000FC0SH8'), --The Old Man and the Sea
+    (25, 3, NULL, 135, NULL, NULL, 'B0093UMLC8'), --A Month in the Country
+    (26, 3, NULL, 173, NULL, NULL, 'B006L8723I'), --Out of the Silent Planet
+    (27, 3, NULL, 204, NULL, NULL, 'B002VFPRTQ'), --The Westing Game
+    (28, 3, NULL, 174, NULL, NULL, 'B0DLSF7SYH'), --Every Heart a Doorway
+    (29, 2, NULL, 213, NULL, NULL, NULL), --Before the Coffee Gets Cold
+    (30, 1, NULL, 271, NULL, NULL, NULL), --Stardust
+    (31, 1, NULL, 212, NULL, NULL, NULL), --The Mysterious Affar at Styles
+    (32, 3, NULL, 322, NULL, NULL, 'B01M3WPB83'), --Meddling Kids
+    (33, 3, NULL, 198, NULL, NULL, 'B07MNG496J'), --This Is How You Lose the Time War
+    (34, 3, NULL, 342, NULL, NULL, 'B08MBQKTTQ'), --The Final Girl Suppport Group
+    (35, 1, NULL, 272, NULL, NULL, NULL), --A House with Good Bones
+    (36, 2, NULL, 114, NULL, NULL, NULL), --Small Things Like These
+    (37, 1, NULL, 320, NULL, NULL, NULL), --Doors of Darkness
+    (38, 4, NULL, 204, NULL, NULL, NULL), --So Long, and Thanks for All the Fish
+    (39, 1, NULL, 699, NULL, NULL, NULL), --A Court of Wings and Ruin
+    (40, 1, NULL, 355, NULL, NULL, NULL), --The Troop
+    (41, 3, NULL, 222, NULL, NULL, 'B07JW24LWW'), --The Saturday Night Ghost Club
+    (42, 3, NULL, 128, NULL, NULL, 'B004G5ZU32'), --The Maltese Falcon
+    (43, 3, NULL, 445, NULL, NULL, 'B00PSSG4MM'), --The Sympathizer
+    (44, 5, NULL, 111, NULL, NULL, NULL), --Dracula Daily
+    (45, 2, NULL, 368, NULL, NULL, NULL), --Remarkably Bright Creatures
+    (46, 1, NULL, 229, NULL, NULL, NULL), --A Court of Frost and Starlight
+    (47, 2, NULL, 316, NULL, NULL, NULL), --Wuthering Heights
+    (48, 1, NULL, 377, NULL, NULL, NULL), --The Lightning Thief
+    (49, 1, NULL, 279, NULL, NULL, NULL), --The Sea of Monsters
+    (50, 1, NULL, 352, NULL, NULL, NULL), --The Titan's Curse
+    (51, 1, NULL, 361, NULL, NULL, NULL), --The Battle of the Labyrinth
+    (52, 1, NULL, 381, NULL, NULL, NULL), --The Last Olympian
+    (53, 1, NULL, 384, NULL, NULL, NULL), --The Martian
+    (54, 3, NULL, 383, NULL, NULL, 'B0054LJGWS'), --Good Omens
+    (55, 1, NULL, 474, NULL, NULL, NULL), --Project Hail Mary
+    (56, 1, NULL, 382, NULL, NULL, NULL), --Red Rising
+    (57, 2, NULL, 382, NULL, NULL, NULL), --Sunrise on the Reaping
+    (58, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (59, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (60, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (61, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (62, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (63, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (64, 1, NULL, NULL, NULL, NULL, NULL), --The Way of Kings
+    (65, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (66, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (67, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (68, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (69, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (70, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (71, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (72, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (73, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (74, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (75, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (76, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (77, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (78, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (79, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (80, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (81, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (82, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (83, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (84, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (85, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (86, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (87, NULL, NULL, NULL, NULL, NULL, NULL), --The Hunger Games
+    (88, NULL, NULL, NULL, NULL, NULL, NULL), --Catching Fire
+    (89, NULL, NULL, NULL, NULL, NULL, NULL), --Mocking Jay
+    (34, 1, NULL, 342, NULL, NULL, NULL), --The Final Girl Suppport Group
+    (52, 2, NULL, 381, NULL, NULL, NULL), --The Last Olympian
+    (90, 1, NULL, /*pages*/, NULL, NULL, NULL), --Inkheart
+    (91, 2, NULL, /*pages*/, NULL, NULL, NULL), --Inkdeath
+    (92, NULL, NULL, NULL, NULL, NULL, NULL); --The Color of Revenge
 
-INSERT INTO book_authors (book_id, author_id)
+CREATE TABLE owned_books (
+    owned_book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    edition_id INTEGER REFERS TO editions (edition_id),
+    owned BOOLEAN NOT NULL SET DEFAULT TRUE
+);
+
+INSERT INTO owned_books (edition_id)
+VALUES
+    (1),
+    (2),
+    (3),
+    (4),
+    (5),
+    (6),
+    (7),
+    (8),
+    (9),
+    (10),
+    (15),
+    (16),
+    (17),
+    (18),
+    (19),
+    (20),
+    (21),
+    (22),
+    (23),
+    (29),
+    (30),
+    (31),
+    (35),
+    (36),
+    (38),
+    (39),
+    (40),
+    (45),
+    (46),
+    (47),
+    (48),
+    (49),
+    (50),
+    (51),
+    (52),
+    (53),
+    (55),
+    (56),
+    (57),
+    (64),
+    (90),
+    (91),
+    (92),
+    (93);
+
+INSERT INTO book_authors (edition_id, author_id)
 VALUES
     (1, 1),
     (2, 2),
@@ -391,7 +462,43 @@ VALUES
     (54, 9),
     (55, 58),
     (56, 60),
-    (57, 2);
+    (57, 2),
+    --cosmere books below. some have additional authors
+    (58, 61),
+    (59, 61),
+    (60, 61),
+    (61, 61),
+    (62, 61),
+    (63, 61),
+    (64, 61),
+    (65, 61),
+    (66, 61),
+    (67, 61),
+    (68, 61),
+    (69, 61),
+    (70, 61),
+    (71, 61),
+    (72, 61),
+    (73, 61),
+    (74, 61),
+    (75, 61),
+    (76, 61),
+    (77, 61),
+    (78, 61),
+    (79, 61),
+    (80, 61),
+    (81, 61),
+    (82, 61),
+    (83, 61),
+    (84, 61),
+    (85, 61),
+    (86, 61),
+    --cosmere books above. some have additional authors
+    (87, 2),
+    (88, 2),
+    (89, 2),
+    (90, 20),
+    (91, 57);
 
 INSERT INTO ratings (book_id, rating)
 VALUES
@@ -719,7 +826,7 @@ CREATE TABLE novel_series_series (
 
 CREATE TABLE novel_series (
     novel_series_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    novel_series
+    novel_series,
     novel_series_series_id INTEGER REFERS TO novel_series_series (novel_series_series_id)
 );
 
@@ -798,6 +905,13 @@ VALUES
     (1, 85, 28),
     (1, 86, 29);
 
+SELECT books.book_title, SUM(page_read.pages_read) AS pages_read, (SUM(page_read.pages_read)/editions.pages*100) AS percent_complete, MAX(page_read.read_date) AS last_read
+FROM read_runs
+JOIN editions ON editions.edition_id = read_run.edition_id
+JOIN books ON books.book_id = editions.book_id
+JOIN page_read ON page_read.read_run_id = read_run_read_run_id
+GROUP BY book_title, pages_read, percent_complete, last_read
+ORDER BY last_read DESC;
 
 --query for percent complete
 -- update for editions
@@ -832,7 +946,7 @@ WHERE percent_complete < 100;
 --        INSERT INTO book_authors (book_id, author_id) VALUES (b_id, a.author_id);
 --    END LOOP
 --    INSERT INTO editions (book_id, edition_type_id, pub_date, pages, isbn_ten, isbn_thirteen, asin)
---    VALUES (b_id, /*edition_type_id*/, /*pub_date*/, /*pages*/, /*isbn_ten*/, /*isbn_thirteen*/, /*asin*/);
+--    VALUES (b_id, /*edition_type_id*/, NULL, /*pages*/, /*isbn_ten*/, /*isbn_thirteen*/, /*asin*/);
 --END; $$;
 
 
