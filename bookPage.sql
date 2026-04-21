@@ -192,16 +192,16 @@ VALUES
     ($$elantris$$),
     ($$*the hope of elantris$$),
     ($$*the emperor's soul$$),
-    ($$stormlight archive: word of radiance$$),
+    ($$stormlight archive: words of radiance$$),
     ($$*edgedancer$$),
     ($$mistborn era 2: the alloy of law$$),
     ($$mistborn era 2: *allomancer jak$$),
     ($$mistborn era 2: shadows of self$$),
     ($$mistborn era 2: the bands of mourning$$),
     ($$mistborn era 2: *mistborn: secret history$$),
-    ($$mistborn era 2: the lot metal$$),
+    ($$mistborn era 2: the lost metal$$),
     ($$*arcanum unbounded essays$$),
-    ($$*shadows for silence$$),
+    ($$*shadows for silence in the forests of hell$$),
     ($$stormlight archive: oathbringer$$),
     ($$*dawnshard$$),
     ($$yumi and the nightmare painter$$),
@@ -219,7 +219,8 @@ VALUES
     ($$Inkdeath$$),
     ($$The Color of Revenge$$),
     ($$All Systems Red$$),
-    ($$A Court of Silver Flames$$);
+    ($$A Court of Silver Flames$$),
+    ($$The Fires of December$$);
 
 INSERT INTO edition_types (edition_type)
 VALUES
@@ -288,35 +289,35 @@ VALUES
     (55, 1, NULL, 474, NULL, NULL, NULL), --Project Hail Mary
     (56, 1, NULL, 382, NULL, NULL, NULL), --Red Rising
     (57, 2, NULL, 382, NULL, NULL, NULL), --Sunrise on the Reaping
-    (58, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (59, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (60, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (61, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (62, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (63, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (58, 1, NULL, NULL, NULL, NULL, NULL), --Mistborn: The Final Empire
+    (59, NULL, NULL, NULL, NULL, NULL, NULL), --The Well of Ascension
+    (60, NULL, NULL, NULL, NULL, NULL, NULL), --The Hero of Ages
+    (61, NULL, NULL, NULL, NULL, NULL, NULL), --The Eleventh Metal*
+    (62, NULL, NULL, NULL, NULL, NULL, NULL), --Warbreaker
+    (63, NULL, NULL, NULL, NULL, NULL, NULL), --Tress of the Emerald Sea
     (64, 1, NULL, NULL, NULL, NULL, NULL), --The Way of Kings
-    (65, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (66, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (67, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (68, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (69, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (70, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (71, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (72, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (73, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (74, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (75, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (76, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (77, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (78, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (79, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (80, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (81, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (82, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (83, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (84, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (85, NULL, NULL, NULL, NULL, NULL, NULL), --
-    (86, NULL, NULL, NULL, NULL, NULL, NULL), --
+    (65, NULL, NULL, NULL, NULL, NULL, NULL), --Elantris
+    (66, NULL, NULL, NULL, NULL, NULL, NULL), --The Hope of Elantris*
+    (67, NULL, NULL, NULL, NULL, NULL, NULL), --The Emperor's Soul*
+    (68, NULL, NULL, NULL, NULL, NULL, NULL), --Words of Radiance
+    (69, NULL, NULL, NULL, NULL, NULL, NULL), --Edgedancer*
+    (70, NULL, NULL, NULL, NULL, NULL, NULL), --The Alloy of Law
+    (71, NULL, NULL, NULL, NULL, NULL, NULL), --Allomancer of Jak*
+    (72, NULL, NULL, NULL, NULL, NULL, NULL), --Shadows of Self
+    (73, NULL, NULL, NULL, NULL, NULL, NULL), --The Bands of Mourning
+    (74, NULL, NULL, NULL, NULL, NULL, NULL), --Mistborn: Secret History
+    (75, NULL, NULL, NULL, NULL, NULL, NULL), --The Lost Metal
+    (76, NULL, NULL, NULL, NULL, NULL, NULL), --Arcanum Unbounded Essays*
+    (77, NULL, NULL, NULL, NULL, NULL, NULL), --Shadows for Silence in the Forests of Hell*
+    (78, NULL, NULL, NULL, NULL, NULL, NULL), --OathBringer
+    (79, NULL, NULL, NULL, NULL, NULL, NULL), --Dawnshard*
+    (80, NULL, NULL, NULL, NULL, NULL, NULL), --Yumi and the Nightmare Painter
+    (81, NULL, NULL, NULL, NULL, NULL, NULL), --White Sand
+    (82, NULL, NULL, NULL, NULL, NULL, NULL), --Rhythm of War
+    (83, NULL, NULL, NULL, NULL, NULL, NULL), --Horneater (unreleased)
+    (84, NULL, NULL, NULL, NULL, NULL, NULL), --The Sunlit Man
+    (85, NULL, NULL, NULL, NULL, NULL, NULL), --Wind and Truth
+    (86, NULL, NULL, NULL, NULL, NULL, NULL), --Isles of the Emberdark (Includes the Sixth of Dusk)
     (87, NULL, NULL, NULL, NULL, NULL, NULL), --The Hunger Games
     (88, NULL, NULL, NULL, NULL, NULL, NULL), --Catching Fire
     (89, NULL, NULL, NULL, NULL, NULL, NULL), --Mocking Jay
@@ -326,61 +327,64 @@ VALUES
     (91, 2, NULL, /*pages*/, NULL, NULL, NULL), --Inkdeath
     (92, NULL, NULL, NULL, NULL, NULL, NULL), --The Color of Revenge
     (93, 1, '2017-05-02', 152, NULL, NULL, NULL), --All Systems Red
-    (94, NULL, NULL, NULL, NULL, NULL, NULL); --A Court of Silver Flames
+    (94, NULL, NULL, NULL, NULL, NULL, NULL), --A Court of Silver Flames
+    (95, NULL, NULL, NULL, NULL, NULL, NULL); --The Fires of December
 
 CREATE TABLE owned_books (
     owned_book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     edition_id INTEGER REFERS TO editions (edition_id),
-    owned BOOLEAN NOT NULL SET DEFAULT TRUE
+    owned BOOLEAN NOT NULL SET DEFAULT TRUE,
+    owner TEXT
 );
 
-INSERT INTO owned_books (edition_id)
+INSERT INTO owned_books (edition_id, owner)
 VALUES
-    (1),
-    (2),
-    (3),
-    (4),
-    (5),
-    (6),
-    (7),
-    (8),
-    (9),
-    (10),
-    (15),
-    (16),
-    (17),
-    (18),
-    (19),
-    (20),
-    (21),
-    (22),
-    (23),
-    (29),
-    (30),
-    (31),
-    (35),
-    (36),
-    (38),
-    (39),
-    (40),
-    (45),
-    (46),
-    (47),
-    (48),
-    (49),
-    (50),
-    (51),
-    (52),
-    (53),
-    (55),
-    (56),
-    (57),
-    (64),
-    (90),
-    (91),
-    (92),
-    (93),
-    (95);
+    (1, 'Michael'),
+    (2, 'Michael'),
+    (3, 'Michael'),
+    (4, 'Michael'),
+    (5, 'Michael'),
+    (6, 'Michael'),
+    (7, 'Michael'),
+    (8, 'Michael'),
+    (9, 'Michael'),
+    (10, 'Michael'),
+    (15, 'Michael'),
+    (16, 'Michael'),
+    (17, 'Michael'),
+    (18, 'Michael'),
+    (19, 'Michael'),
+    (20, 'Michael'),
+    (21, 'Michael'),
+    (22, 'Michael'),
+    (23, 'Michael'),
+    (29, 'Michael'),
+    (30, 'Michael'),
+    (31, 'Michael'),
+    (35, 'Michael'),
+    (36, 'Michael'),
+    (38, 'Michael'),
+    (39, 'Michael'),
+    (40, 'Michael'),
+    (45, 'Michael'),
+    (46, 'Michael'),
+    (47, 'Michael'),
+    (48, 'Michael'),
+    (49, 'Michael'),
+    (50, 'Michael'),
+    (51, 'Michael'),
+    (52, 'Michael'),
+    (53, 'Michael'),
+    (55, 'Michael'),
+    (56, 'Michael'),
+    (57, 'Michael'),
+    (64, 'Michael'),
+    (90, 'Michael'),
+    (91, 'Michael'),
+    (92, 'Michael'),
+    (93, 'Michael'),
+    (95, 'Michael'),
+    (58, 'Michael');
 
 INSERT INTO book_authors (edition_id, author_id)
 VALUES
@@ -499,6 +503,7 @@ VALUES
     (84, 61),
     (85, 61),
     (86, 61),
+    (97, 61),
     --cosmere books above. some have additional authors
     (87, 2),
     (88, 2),
@@ -863,21 +868,43 @@ VALUES
     ('Cosmere'),
     ('Riordan'),
     ('Hunger Games'),
-    ('The Murderbot Diaries');
+    ('The Murderbot Diaries'),
+    ('Maasverse');
 
 INSERT INTO novel_series (novel_series, novel_series_series_id)
 VALUES
+    ('A Court of Thorns and Roses', 5),
+    ('Throne of Glass', 5),
+    ('Crescent City', 5),
+    ('The Mistborn Saga'),
     ('Mistborn Era 1', 1),
+    ('Mistborn Era 2', 1),
+    ('Mistborn Era 3', 1),
+    ('Mistborn Era 4', 1),
+    ('Elantris', 1),
     ('The Stormlight Archive', 1),
-    ('Mistborn Era 2', 1);
+    ('Hoids Travails'),;
 
 INSERT INTO reading_orders (note, novel_series_series_id, novel_series_id)
-    VALUES
-        ('Cosmere Chronological', 1, NULL),
-        ('Riordan Release', 2, NULL),
-        ('Hunger Games Release', 3, NULL),
-        ('Hunger Games Chronological', 3, NULL),
-        ('The Murderbot Diaries Release', 4, Null);
+VALUES
+    ('Cosmere Chronological (compiled)', 1, NULL),
+    ('Riordan Release', 2, NULL),
+    ('Hunger Games Release', 3, NULL),
+    ('Hunger Games Chronological', 3, NULL),
+    ('The Murderbot Diaries Release', 4, Null),
+    ('Maasverse Release', 5, NULL),
+    ('A Cour of Thorns and Roses Release', NULL, 1),
+    ('Throne of Glass Release', NULL, 2),
+    ('Crescent City Release', NULL, 3),
+    ('The Mistborn Saga', Null, 4),
+    ('Mistborn Era 1', 5),
+    ('Mistborn Era 2', 6),
+    ('Mistborn Era 3', 7),
+    ('Mistborn Era 4', 8),
+    ('Elantris', 9),
+    ('The Stormlight Archive', 10),
+    ('Hoids Travails', 11);
+    
 
 INSERT INTO reading_order_books (reading_order_id, book_id, order_num)
 VALUES
@@ -920,7 +947,10 @@ VALUES
     (1, 83, 26),
     (1, 84, 27),
     (1, 85, 28),
-    (1, 86, 29);
+    (1, 86, 29),
+    (17, 63, 1),
+    (17, 80, 2),
+    (17, 95, 3);
 
 --query for read runs
 SELECT books.book_title, SUM(page_read.pages_read) AS pages_read, (SUM(page_read.pages_read)/editions.pages*100) AS percent_complete, MAX(page_read.read_date) AS last_read
