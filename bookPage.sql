@@ -119,7 +119,8 @@ VALUES
     ('Andy Weir'),
     ('Terry Pratchett'),
     ('Pierce Brown'),
-    ('Brandon Sanderson');
+    ('Brandon Sanderson'),
+    ('Martha Wells');
 
 INSERT INTO books (book_title)
 VALUES
@@ -216,7 +217,9 @@ VALUES
     ($$Mocking Jay$$),
     ($$Inkheart$$),
     ($$Inkdeath$$),
-    ($$The Color of Revenge$$);
+    ($$The Color of Revenge$$),
+    ($$All Systems Red$$),
+    ($$A Court of Silver Flames$$);
 
 INSERT INTO edition_types (edition_type)
 VALUES
@@ -321,7 +324,9 @@ VALUES
     (52, 2, NULL, 381, NULL, NULL, NULL), --The Last Olympian
     (90, 1, NULL, /*pages*/, NULL, NULL, NULL), --Inkheart
     (91, 2, NULL, /*pages*/, NULL, NULL, NULL), --Inkdeath
-    (92, NULL, NULL, NULL, NULL, NULL, NULL); --The Color of Revenge
+    (92, NULL, NULL, NULL, NULL, NULL, NULL), --The Color of Revenge
+    (93, 1, '2017-05-02', 152, NULL, NULL, NULL), --All Systems Red
+    (94, NULL, NULL, NULL, NULL, NULL, NULL); --A Court of Silver Flames
 
 CREATE TABLE owned_books (
     owned_book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -374,7 +379,8 @@ VALUES
     (90),
     (91),
     (92),
-    (93);
+    (93),
+    (95);
 
 INSERT INTO book_authors (edition_id, author_id)
 VALUES
@@ -498,7 +504,9 @@ VALUES
     (88, 2),
     (89, 2),
     (90, 20),
-    (91, 57);
+    (91, 57),
+    (95, 62),
+    (96, 8);
 
 INSERT INTO ratings (book_id, rating)
 VALUES
@@ -557,7 +565,9 @@ VALUES
     (46),
     (55),
     (56),
-    (57);
+    (57),
+    (95),
+    (96);
 
 INSERT INTO page_read (read_date, read_run_id, pages_read)
 VALUES
@@ -816,7 +826,11 @@ VALUES
     ('2026-04-02', 48, 48),
     ('2026-04-03', 48, 53),
     ('2026-04-03', 49, 58),
-    ('2026-04-04', 49, 8);
+    ('2026-04-04', 49, 10),
+    ('2026-04-14', 49, 76),
+    ('2026-04-15', 49, 47),
+    ('2026-04-16', 49, 23),
+    ('2026-04-20', 49, 113);
 
 
 CREATE TABLE novel_series_series (
@@ -848,7 +862,8 @@ INSERT INTO novel_series_series (novel_series_series)
 VALUES
     ('Cosmere'),
     ('Riordan'),
-    ('Hunger Games');
+    ('Hunger Games'),
+    ('The Murderbot Diaries');
 
 INSERT INTO novel_series (novel_series, novel_series_series_id)
 VALUES
@@ -858,12 +873,13 @@ VALUES
 
 INSERT INTO reading_orders (note, novel_series_series_id, novel_series_id)
     VALUES
-        ("Cosmere Chronological", 1, NULL),
-        ("Riordan Release", 2, NULL),
-        ("Hunger Games Release", 3, NULL),
-        ("Hunger Games Chronological", 3, NULL);
+        ('Cosmere Chronological', 1, NULL),
+        ('Riordan Release', 2, NULL),
+        ('Hunger Games Release', 3, NULL),
+        ('Hunger Games Chronological', 3, NULL),
+        ('The Murderbot Diaries Release', 4, Null);
 
-INSERT INTO reading_order_books (novel_series_series_id, book_id, order_num)
+INSERT INTO reading_order_books (reading_order_id, book_id, order_num)
 VALUES
     (3, 87, 1),
     (3, 88, 2),
@@ -875,6 +891,7 @@ VALUES
     (4, 87, 3),
     (4, 88, 4),
     (4, 89, 5),
+    (5, 93, 1),
     (1, 58, 1),
     (1, 59, 2),
     (1, 60, 3),
@@ -905,6 +922,7 @@ VALUES
     (1, 85, 28),
     (1, 86, 29);
 
+--query for read runs
 SELECT books.book_title, SUM(page_read.pages_read) AS pages_read, (SUM(page_read.pages_read)/editions.pages*100) AS percent_complete, MAX(page_read.read_date) AS last_read
 FROM read_runs
 JOIN editions ON editions.edition_id = read_run.edition_id
