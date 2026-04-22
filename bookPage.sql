@@ -326,7 +326,7 @@ VALUES
     (90, 1, NULL, /*pages*/, NULL, NULL, NULL), --Inkheart
     (91, 2, NULL, /*pages*/, NULL, NULL, NULL), --Inkdeath
     (92, NULL, NULL, NULL, NULL, NULL, NULL), --The Color of Revenge
-    (93, 1, NULL, 296, NULL, NULL, NULL), --The Murderbot Diaries Vol. 1
+    (93, 1, NULL, 291, NULL, NULL, NULL), --The Murderbot Diaries Vol. 1
     (94, NULL, NULL, NULL, NULL, NULL, NULL), --A Court of Silver Flames
     (95, NULL, NULL, NULL, NULL, NULL, NULL); --The Fires of December
 
