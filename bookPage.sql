@@ -220,7 +220,16 @@ VALUES
     ($$The Color of Revenge$$),
     ($$The Murderbot Diaries Vol. 1$$),
     ($$A Court of Silver Flames$$),
-    ($$The Fires of December$$);
+    ($$The Fires of December$$)
+    ($$All Systems Red$$),
+    ($$Artificial Condition$$),
+    ($$Rogue Protocal$$),
+    ($$Exit Strategy$$),
+    ($$Fugitive Telemetry$$),
+    ($$Network Effect$$),
+    ($$System Collapse$$),
+    ($$The Murderbot Diaries Vol. 2$$),
+    ($$The Murderbot Diaries Vol. 3$$);
 
 INSERT INTO edition_types (edition_type)
 VALUES
@@ -328,7 +337,16 @@ VALUES
     (92, NULL, NULL, NULL, NULL, NULL, NULL), --The Color of Revenge
     (93, 1, NULL, 291, NULL, NULL, NULL), --The Murderbot Diaries Vol. 1
     (94, NULL, NULL, NULL, NULL, NULL, NULL), --A Court of Silver Flames
-    (95, NULL, NULL, NULL, NULL, NULL, NULL); --The Fires of December
+    (95, NULL, NULL, NULL, NULL, NULL, NULL), --The Fires of December
+    (96, NULL, NULL, NULL, NULL, NULL, NULL), --All Systems Red
+    (97, NULL, NULL, NULL, NULL, NULL, NULL), --Artificial Condition
+    (98, NULL, NULL, NULL, NULL, NULL, NULL), --Rogue Protocol
+    (99, NULL, NULL, NULL, NULL, NULL, NULL), --Exit Strategy
+    (100, NULL, NULL, NULL, NULL, NULL, NULL), --Fugitive Telemetry
+    (101, NULL, NULL, NULL, NULL, NULL, NULL), --Network Effect
+    (102, NULL, NULL, NULL, NULL, NULL, NULL), --System Collapse
+    (103, NULL, NULL, NULL, NULL, NULL, NULL), --The Murderbot Diaries Vol. 2
+    (104, NULL, NULL, NULL, NULL, NULL, NULL); --The Murderbot Diaries Vol. 3
 
 CREATE TABLE owned_books (
     owned_book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -884,7 +902,9 @@ VALUES
     ('Mistborn Era 4', 1),
     ('Elantris', 1),
     ('The Stormlight Archive', 1),
-    ('Hoids Travails'),;
+    ('Hoids Travails' 1),
+    ('The Murderbot Diaries', 4),
+    ('The Murderbot Diaries Vol', 4);
 
 INSERT INTO reading_orders (note, novel_series_series_id, novel_series_id)
 VALUES
@@ -892,19 +912,20 @@ VALUES
     ('Riordan Release', 2, NULL),
     ('Hunger Games Release', 3, NULL),
     ('Hunger Games Chronological', 3, NULL),
-    ('The Murderbot Diaries Volume Release', 4, Null),
+    ('The Murderbot Diaries Volume', NULL, 13),
     ('Maasverse Release', 5, NULL),
     ('A Cour of Thorns and Roses Release', NULL, 1),
     ('Throne of Glass Release', NULL, 2),
     ('Crescent City Release', NULL, 3),
     ('The Mistborn Saga', Null, 4),
-    ('Mistborn Era 1', 5),
-    ('Mistborn Era 2', 6),
-    ('Mistborn Era 3', 7),
-    ('Mistborn Era 4', 8),
-    ('Elantris', 9),
-    ('The Stormlight Archive', 10),
-    ('Hoids Travails', 11);
+    ('Mistborn Era 1', NULL, 5),
+    ('Mistborn Era 2', NULL, 6),
+    ('Mistborn Era 3', NULL, 7),
+    ('Mistborn Era 4', NULL, 8),
+    ('Elantris', NULL, 9),
+    ('The Stormlight Archive', NULL, 10),
+    ('Hoids Travails', NULL, 11),
+    ('The Murderbot Diaries', NULL, 12);
     
 
 INSERT INTO reading_order_books (reading_order_id, book_id, order_num)
@@ -951,7 +972,19 @@ VALUES
     (1, 86, 29),
     (17, 63, 1),
     (17, 80, 2),
-    (17, 95, 3);
+    (17, 95, 3),
+    (5, 93, 1),
+    (5, 103, 2),
+    (5, 104, 3),
+    (5, 101, 3.5),
+    (5, 104, 3.75),
+    (18, 96, 1),
+    (18, 97, 2),
+    (18, 98, 3),
+    (18, 99, 4),
+    (18, 100, 5),
+    (18, 101, 6),
+    (18, 102, 7);
 
 --query for read runs
 SELECT books.book_title, SUM(page_read.pages_read) AS pages_read, (SUM(page_read.pages_read)/editions.pages*100) AS percent_complete, MAX(page_read.read_date) AS last_read
