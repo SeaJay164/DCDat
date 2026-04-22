@@ -218,7 +218,7 @@ VALUES
     ($$Inkheart$$),
     ($$Inkdeath$$),
     ($$The Color of Revenge$$),
-    ($$All Systems Red$$),
+    ($$The Murderbot Diaries Vol. 1$$),
     ($$A Court of Silver Flames$$),
     ($$The Fires of December$$);
 
@@ -326,7 +326,7 @@ VALUES
     (90, 1, NULL, /*pages*/, NULL, NULL, NULL), --Inkheart
     (91, 2, NULL, /*pages*/, NULL, NULL, NULL), --Inkdeath
     (92, NULL, NULL, NULL, NULL, NULL, NULL), --The Color of Revenge
-    (93, 1, '2017-05-02', 152, NULL, NULL, NULL), --All Systems Red
+    (93, 1, NULL, 296, NULL, NULL, NULL), --The Murderbot Diaries Vol. 1
     (94, NULL, NULL, NULL, NULL, NULL, NULL), --A Court of Silver Flames
     (95, NULL, NULL, NULL, NULL, NULL, NULL); --The Fires of December
 
@@ -518,7 +518,8 @@ VALUES
     (40, 7.5),
     (46, 9.5),
     (55, 9.5),
-    (56, 8);
+    (56, 8),
+    (57, 10); --sunrise
 
 INSERT INTO read_runs (edition_id)
 VALUES
@@ -570,9 +571,9 @@ VALUES
     (46),
     (55),
     (56),
-    (57),
-    (95),
-    (96);
+    (57), --sunrise
+    (95), --murderbot
+    (96); --silver flames
 
 INSERT INTO page_read (read_date, read_run_id, pages_read)
 VALUES
@@ -891,7 +892,7 @@ VALUES
     ('Riordan Release', 2, NULL),
     ('Hunger Games Release', 3, NULL),
     ('Hunger Games Chronological', 3, NULL),
-    ('The Murderbot Diaries Release', 4, Null),
+    ('The Murderbot Diaries Volume Release', 4, Null),
     ('Maasverse Release', 5, NULL),
     ('A Cour of Thorns and Roses Release', NULL, 1),
     ('Throne of Glass Release', NULL, 2),
