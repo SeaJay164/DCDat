@@ -282,7 +282,7 @@ VALUES
     (39, 1, NULL, 699, NULL, NULL, NULL), --A Court of Wings and Ruin
     (40, 1, NULL, 355, NULL, NULL, NULL), --The Troop
     (41, 3, NULL, 222, NULL, NULL, 'B07JW24LWW'), --The Saturday Night Ghost Club
-    (42, 3, NULL, 128, NULL, NULL, 'B004G5ZU32'), --The Maltese Falcon
+    (42, 3, NULL, 125, NULL, NULL, 'B004G5ZU32'), --The Maltese Falcon
     (43, 3, NULL, 445, NULL, NULL, 'B00PSSG4MM'), --The Sympathizer
     (44, 5, NULL, 111, NULL, NULL, NULL), --Dracula Daily
     (45, 2, NULL, 368, NULL, NULL, NULL), --Remarkably Bright Creatures
