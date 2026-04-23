@@ -587,7 +587,6 @@ VALUES
     (55),
     (56),
     (57), --sunrise
-    (95), --murderbot
     (96); --silver flames
 
 CREATE TABLE page_read (
