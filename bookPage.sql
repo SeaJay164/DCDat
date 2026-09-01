@@ -316,7 +316,7 @@ VALUES
     (91, 2, NULL, /*pages*/, NULL, NULL, NULL), --Inkdeath
     (92, NULL, NULL, NULL, NULL, NULL, NULL), --The Color of Revenge
     (93, 1, NULL, 291, NULL, NULL, NULL), --The Murderbot Diaries Vol. 1
-    (94, NULL, NULL, NULL, NULL, NULL, NULL), --A Court of Silver Flames
+    (94, 2, NULL, 751, NULL, '978-1-68119-628-2', NULL), --A Court of Silver Flames
     (95, NULL, NULL, NULL, NULL, NULL, NULL), --The Fires of December
     (96, NULL, NULL, NULL, NULL, NULL, NULL), --All Systems Red
     (97, NULL, NULL, NULL, NULL, NULL, NULL), --Artificial Condition
@@ -857,7 +857,11 @@ VALUES
     ('2026-04-14', 49, 76),
     ('2026-04-15', 49, 47),
     ('2026-04-16', 49, 23),
-    ('2026-04-20', 49, 113);
+    ('2026-04-20', 49, 113),
+    ('2026-04-21', 50, 55),
+    ('2026-04-23', 50, 10),
+    ('2026-08-29', 50, 32),
+    ('2026-08-31', 50, 12.5);
 
 
 CREATE TABLE novel_series_series (
