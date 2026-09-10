@@ -525,10 +525,10 @@ CREATE TABLE ratings (
 
 INSERT INTO ratings (book_id, rating)
 VALUES
-    (40, 7.5),
-    (46, 9.5),
-    (55, 9.5),
-    (56, 8),
+    (40, 7.5), --troop
+    (46, 9.5), --acofas
+    (55, 9.5), --project hail mary
+    (56, 8), --red rising
     (57, 10); --sunrise
 
 CREATE TABLE read_runs (
@@ -538,54 +538,54 @@ CREATE TABLE read_runs (
 
 INSERT INTO read_runs (edition_id)
 VALUES
-    (1),
-    (2),
-    (3),
-    (4),
-    (5),
-    (6),
-    (7),
-    (8),
-    (9),
-    (10),
-    (11),
-    (12),
-    (13),
-    (14),
-    (15),
-    (16),
-    (17),
-    (18),
-    (19),
-    (20),
-    (21),
-    (22),
-    (23),
-    (24),
-    (25),
-    (26),
-    (27),
-    (28),
-    (29),
-    (30),
-    (31),
-    (32),
-    (33),
-    (34),
-    (35),
-    (36),
-    (37),
-    (38),
-    (39),
-    (40),
-    (41),
-    (42),
-    (43),
-    (44),
-    (45),
-    (46),
-    (55),
-    (56),
+    (1), --golden compass
+    (2), --songbirds and snakes
+    (3), --faceless old woman
+    (4), --castle of llyr
+    (5), --taran wanderer
+    (6), --high king
+    (7), --inkspell
+    (8), --magician's nephew
+    (9), --lion witch wardrobe
+    (10), --horse and his boy
+    (11), --prince caspian
+    (12), --dawntreader
+    (13), --silver chair
+    (14), --last battle
+    (15), --acotar
+    (16), --norse mythology
+    (17), --subtle knife
+    (18), --amber spyglass
+    (19), --magicians
+    (20), --hitchhikers 1
+    (21), --hitchhikers 2
+    (22), --hitchhikers 3
+    (23), --acomaf
+    (24), --the old man and the sea
+    (25), --a month in the country
+    (26), --out of the silent planet
+    (27), --westing game
+    (28), --every heart a doorway
+    (29), --before the coffee gets cold
+    (30), --stardust
+    (31), --mysterious affair at styles
+    (32), --meddling kids
+    (33), --time war
+    (34), --final girl
+    (35), --house good bones
+    (36), --small things like these
+    (37), --doors of darkness
+    (38), --hitchhiker 4
+    (39), --acowar
+    (40), --the troop
+    (41), --saturday night ghost club
+    (42), --maltese falcon
+    (43), --sympathizer
+    (44), --dracula daily
+    (45), --remarkably bright creatures
+    (46), --acofas
+    (55), --project hail mary
+    (56), --red rising
     (57), --sunrise
     (96); --silver flames
 
