@@ -1,6 +1,6 @@
 --Cosmere charts
---https://www.reddit.com/r/Cosmere/comments/1hvlpag/updated_chart_of_the_published_works_of_brandon/#lightbox
---https://www.reddit.com/user/jofwu/comments/1lwf3dc/cosmere_reading_guide_updated_july_2025/#lightbox
+--https://www.reddit.com/r/Cosmere/comments/1hvlpag/updated_chart_of_the_published_works_of_brandon/
+--https://www.reddit.com/user/jofwu/comments/1lwf3dc/cosmere_reading_guide_updated_july_2025/
 
 CREATE TABLE languages (
     language_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
