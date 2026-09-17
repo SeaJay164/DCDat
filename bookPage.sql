@@ -191,7 +191,8 @@ VALUES
     ($$Network Effect$$),
     ($$System Collapse$$),
     ($$The Murderbot Diaries Vol. 2$$),
-    ($$The Murderbot Diaries Vol. 3$$);
+    ($$The Murderbot Diaries Vol. 3$$),
+    ($$The Assassin's Blade$$); '--delete apostrophe
 
 CREATE TABLE edition_types (
     edition_type_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -326,7 +327,8 @@ VALUES
     (101, NULL, NULL, NULL, NULL, NULL, NULL), --Network Effect
     (102, NULL, NULL, NULL, NULL, NULL, NULL), --System Collapse
     (103, NULL, NULL, NULL, NULL, NULL, NULL), --The Murderbot Diaries Vol. 2
-    (104, NULL, NULL, NULL, NULL, NULL, NULL); --The Murderbot Diaries Vol. 3
+    (104, NULL, NULL, NULL, NULL, NULL, NULL), --The Murderbot Diaries Vol. 3
+    (105, 1, NULL, 435, NULL, NULL, NULL); --The Assassin's Blade
 
 CREATE TABLE owned_books (
     owned_book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -515,7 +517,8 @@ VALUES
     (90, 20),
     (91, 57),
     (95, 62),
-    (96, 8);
+    (96, 8),
+    (107, 8);
 
 CREATE TABLE ratings (
     rating_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -529,7 +532,8 @@ VALUES
     (46, 9.5), --acofas
     (55, 9.5), --project hail mary
     (56, 8), --red rising
-    (57, 10); --sunrise
+    (57, 10), --sunrise
+    (94, ); --acosf
 
 CREATE TABLE read_runs (
     read_run_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -587,7 +591,8 @@ VALUES
     (55), --project hail mary
     (56), --red rising
     (57), --sunrise
-    (96); --silver flames
+    (96), --silver flames
+    (107); --assassin's blade
 
 CREATE TABLE page_read (
     page_read_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -858,8 +863,8 @@ VALUES
     ('2026-04-15', 49, 47),
     ('2026-04-16', 49, 23),
     ('2026-04-20', 49, 113),
-    ('2026-04-21', 50, 55),
-    ('2026-04-23', 50, 10),
+    ('2026-04-21', 50, 55), --wrong book
+    ('2026-04-23', 50, 10), --wrong book
     ('2026-08-29', 50, 32),
     ('2026-08-31', 50, 12.5),
     ('2026-09-08', 50, 49.5),
@@ -868,7 +873,8 @@ VALUES
     ('2026-09-11', 50, 43),
     ('2026-09-13', 50, 86),
     ('2026-09-14', 50, 129),
-    ('2026-09-15', 50, 124);
+    ('2026-09-15', 50, 124),
+    ('2026-09-16', 50, 174);
 
 
 CREATE TABLE novel_series_series (
