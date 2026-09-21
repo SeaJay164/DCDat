@@ -192,6 +192,9 @@ VALUES
     ($$System Collapse$$),
     ($$The Murderbot Diaries Vol. 2$$),
     ($$The Murderbot Diaries Vol. 3$$),
+    ($$Compulsory$$),
+    ($$Rapport: Friendship, Solidarity, Communion, Empathy$$),
+    ($$Home: Habitat, Range, Niche, Territory$$)
     ($$The Assassin's Blade$$); '--delete apostrophe
 
 CREATE TABLE edition_types (
@@ -205,7 +208,8 @@ VALUES
     ('Hardback'),
     ('Kindle'),
     ('Mass Market Paperback'),
-    ('Substack');
+    ('Substack'),
+    ('Webpage');
 
 CREATE TABLE editions (
     edition_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -328,7 +332,10 @@ VALUES
     (102, NULL, NULL, NULL, NULL, NULL, NULL), --System Collapse
     (103, NULL, NULL, NULL, NULL, NULL, NULL), --The Murderbot Diaries Vol. 2
     (104, NULL, NULL, NULL, NULL, NULL, NULL), --The Murderbot Diaries Vol. 3
-    (105, 1, NULL, 435, NULL, NULL, NULL); --The Assassin's Blade
+    (105, NULL, NULL, NULL, NULL, NULL, NULL), --Compulsory (murderbot)
+    (106, NULL, NULL, NULL, NULL, NULL, NULL), --Rapport (murderbot)
+    (107, NULL, NULL, NULL, NULL, NULL, NULL), --Home (murderbot)
+    (108, 1, NULL, 435, NULL, NULL, NULL); --The Assassin's Blade
 
 CREATE TABLE owned_books (
     owned_book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
