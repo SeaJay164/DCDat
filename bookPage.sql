@@ -138,7 +138,7 @@ VALUES
     ($$The Titan's Curse$$),
     ($$The Battle of the Labyrinth$$),
     ($$The Last Olympian$$),
-    ($$The Martian$$)
+    ($$The Martian$$),
     ($$Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch$$),
     ($$Project Hail Mary$$),
     ($$Red Rising$$),
@@ -182,7 +182,7 @@ VALUES
     ($$The Color of Revenge$$),
     ($$The Murderbot Diaries Vol. 1$$),
     ($$A Court of Silver Flames$$),
-    ($$The Fires of December$$)
+    ($$The Fires of December$$), --cosmere
     ($$All Systems Red$$),
     ($$Artificial Condition$$),
     ($$Rogue Protocol$$),
@@ -194,7 +194,7 @@ VALUES
     ($$The Murderbot Diaries Vol. 3$$),
     ($$Compulsory$$),
     ($$Rapport: Friendship, Solidarity, Communion, Empathy$$),
-    ($$Home: Habitat, Range, Niche, Territory$$)
+    ($$Home: Habitat, Range, Niche, Territory$$),
     ($$The Assassin's Blade$$); '--delete apostrophe
 
 CREATE TABLE edition_types (
@@ -540,7 +540,7 @@ VALUES
     (55, 9.5), --project hail mary
     (56, 8), --red rising
     (57, 10), --sunrise
-    (94, ); --acosf
+    (94, 9); --acosf
 
 CREATE TABLE read_runs (
     read_run_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
