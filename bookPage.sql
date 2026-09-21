@@ -185,7 +185,7 @@ VALUES
     ($$The Fires of December$$)
     ($$All Systems Red$$),
     ($$Artificial Condition$$),
-    ($$Rogue Protocal$$),
+    ($$Rogue Protocol$$),
     ($$Exit Strategy$$),
     ($$Fugitive Telemetry$$),
     ($$Network Effect$$),
