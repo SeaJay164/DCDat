@@ -77,7 +77,8 @@ VALUES
     ('Terry Pratchett'),
     ('Pierce Brown'),
     ('Brandon Sanderson'),
-    ('Martha Wells');
+    ('Martha Wells'),
+    ('Darcy Coates');
 
 CREATE TABLE books (
     book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -195,7 +196,8 @@ VALUES
     ($$Compulsory$$),
     ($$Rapport: Friendship, Solidarity, Communion, Empathy$$),
     ($$Home: Habitat, Range, Niche, Territory$$),
-    ($$The Assassin's Blade$$); '--delete apostrophe
+    ($$The Assassin's Blade$$), '--delete apostrophe
+    ($$The Haunting of Ashburn House$$);
 
 CREATE TABLE edition_types (
     edition_type_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -335,7 +337,8 @@ VALUES
     (105, NULL, NULL, NULL, NULL, NULL, NULL), --Compulsory (murderbot)
     (106, NULL, NULL, NULL, NULL, NULL, NULL), --Rapport (murderbot)
     (107, NULL, NULL, NULL, NULL, NULL, NULL), --Home (murderbot)
-    (108, 1, NULL, 435, NULL, NULL, NULL); --The Assassin's Blade
+    (108, 1, NULL, 435, NULL, NULL, NULL), --The Assassin's Blade
+    (109, 1, NULL, 329, NULL, 9781728220130, NULL); --The Haunting of Ashburn House
 
 CREATE TABLE owned_books (
     owned_book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -391,7 +394,8 @@ VALUES
     (92, 'Michael'),
     (93, 'Michael'),
     (95, 'Michael'),
-    (58, 'Michael');
+    (58, 'Michael'),
+    (111, 'Ali');
 
 CREATE TABLE book_authors (
     book_author_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -524,8 +528,9 @@ VALUES
     (90, 20),
     (91, 57),
     (95, 62),
-    (96, 8),
-    (107, 8);
+    (96, 8), --silver flames
+    (110, 8), --assassins blade
+    (111, 63); --ashburn house
 
 CREATE TABLE ratings (
     rating_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -540,7 +545,8 @@ VALUES
     (55, 9.5), --project hail mary
     (56, 8), --red rising
     (57, 10), --sunrise
-    (94, 9); --acosf
+    (94, 9), --acosf
+    (108, 7.5); --ashburn house
 
 CREATE TABLE read_runs (
     read_run_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -599,7 +605,8 @@ VALUES
     (56), --red rising
     (57), --sunrise
     (96), --silver flames
-    (107); --assassin's blade
+    (110), --assassin's blade
+    (111); --ashburn house
 
 CREATE TABLE page_read (
     page_read_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -887,7 +894,9 @@ VALUES
     ('2026-09-22', 51, 103),
     ('2026-09-29', 51, 66),
     ('2026-09-30', 51, 39),
-    ('2026-10-04', 51, 107);
+    ('2026-10-04', 51, 107),
+    ('2026-10-27', 51, 64),
+    ('2026-10-27', 52, 121);
 
 
 CREATE TABLE novel_series_series (
