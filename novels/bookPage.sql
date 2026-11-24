@@ -78,7 +78,8 @@ VALUES
     ('Pierce Brown'),
     ('Brandon Sanderson'),
     ('Martha Wells'),
-    ('Darcy Coates');
+    ('Darcy Coates'),
+    ('Matt Dinniman');
 
 CREATE TABLE books (
     book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -198,7 +199,8 @@ VALUES
     ($$Home: Habitat, Range, Niche, Territory$$),
     ($$The Assassin's Blade$$), '--delete apostrophe
     ($$The Haunting of Ashburn House$$),
-    ($$Throne of Glass$$);
+    ($$Throne of Glass$$),
+    ($$Dungeon Crawler Carl$$);
 
 CREATE TABLE edition_types (
     edition_type_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -340,7 +342,8 @@ VALUES
     (107, NULL, NULL, NULL, NULL, NULL, NULL), --Home (murderbot)
     (108, 1, NULL, 435, NULL, NULL, NULL), --The Assassin's Blade
     (109, 1, NULL, 329, NULL, 9781728220130, NULL), --The Haunting of Ashburn House
-    (110, 1, NULL, NULL, NULL, NULL, NULL); --Throne of Glass
+    (110, 1, NULL, 404, NULL, NULL, NULL), --Throne of Glass
+    (111, 1, NULL, NULL, NULL, NULL, NULL); --Dungeon Crawler Carl
 
 CREATE TABLE owned_books (
     owned_book_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -397,8 +400,9 @@ VALUES
     (93, 'Michael'),
     (95, 'Michael'),
     (58, 'Michael'),
-    (111, 'Ali'),
-    (112, 'Ali');
+    (111, 'Ali'), - tHoAH
+    (112, 'Ali'), --ToG
+    (113, 'Michael'); --DCC
 
 CREATE TABLE book_authors (
     book_author_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -534,7 +538,8 @@ VALUES
     (96, 8), --silver flames
     (110, 8), --assassins blade
     (111, 63), --ashburn house
-    (112, 8);
+    (112, 8), --throne of glass
+    (113, 64); --DCC
 
 CREATE TABLE ratings (
     rating_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -551,7 +556,7 @@ VALUES
     (57, 10), --sunrise
     (94, 9), --acosf
     (108, 7.5), --assassin's blade
-    (109, 10);
+    (109, 10); --ashburn house
 
 CREATE TABLE read_runs (
     read_run_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -612,7 +617,8 @@ VALUES
     (96), --silver flames
     (110), --assassin's blade
     (111), --ashburn house
-    (112); --throne of glass
+    (112), --throne of glass
+    (113); --DCC
 
 CREATE TABLE page_read (
     page_read_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -905,7 +911,9 @@ VALUES
     ('2026-10-27', 52, 121),
     ('2026-10-28', 52, 103),
     ('2026-10-29', 52, 105),
-    ('2026-11-01', 53, 50);
+    ('2026-11-01', 53, 50),
+    ('2026-11-22', 53, 43),
+    ('2026-11-23', 53, 77);
 
 
 CREATE TABLE novel_series_series (
